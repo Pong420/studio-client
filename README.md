@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Studio Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). If you are not new to `CRA`, you may skip below steps to [features sections](#features)
 
 ## Available Scripts
 
@@ -44,3 +44,39 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Features
+
+### Auto code formatting and checking before commit
+
+When you commit the source code. The staged files will be
+
+- format by [preitter](https://prettier.io/)
+- apply `eslint` and `type checking` if they are js or ts. The commit will be aborted if not pass the checking
+
+Related library: [husky](https://github.com/typicode/husky), [lint-staged](https://github.com/okonet/lint-staged)
+
+### Import paths
+
+You could import module under `/src` directory using `@/`
+
+```tsx
+import { Spine } from '@/components/Spine';
+import { SpinePlayer, useSpine, UseSpineOption } from '@/hooks/useSpine';
+```
+
+### Sass Prepend
+
+You could
+
+- Add sass shared variables inside the `src/styles/sass/variables.scss`.
+- Create sass files and write down the shared mixins or functions inside `src/styles/sass` directory. Then `@forward` them in the `src/styles/sass/index.scss` file
+
+The below content will be prepended into each `.sass` file before compilation. So you can use the variables directly.
+
+```scss
+@use 'src/styles/sass/variables' as vars;
+@use 'src/styles/sass/index.scss';
+```
+
+This feature controlled in `app.config.js` which is an option of [sass-loder](https://webpack.js.org/loaders/sass-loader/)
