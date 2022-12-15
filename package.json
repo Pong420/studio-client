@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@ct/react-scripts": "^1.1.0",
+    "@esotericsoftware/spine-canvas": "^4.2.10",
+    "@esotericsoftware/spine-core": "^4.2.10",
+    "@esotericsoftware/spine-player": "^4.2.10",
+    "@esotericsoftware/spine-webgl": "^4.2.10",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
