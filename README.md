@@ -80,3 +80,65 @@ The below content will be prepended into each `.sass` file before compilation. S
 ```
 
 This feature controlled in `app.config.js` which is an option of [sass-loder](https://webpack.js.org/loaders/sass-loader/)
+
+### Spine
+
+Put all spine files into `/public/spine` directory
+
+```bash
+public/spine/
+├── spineboy-pro.json
+├── spineboy.atlas
+└── spineboy.png
+```
+
+Define a spine component
+
+- Use the `Spine` component. It accepct any props of a `div` element. So you can assgin `className` and `style` to it
+
+  ```tsx
+  import { Spine, SpinePlayer } from '@/components/Spine.tsx';
+  import classes from './SpineAniamtion.module.scss';
+
+  function SpineAnimation() {
+    const playerRef = useRef<SpinePlayer>(null);
+
+    useEffect(() => {
+      const player = playerRef.current;
+      if (!player) return;
+      // do some thing you need
+    }, []);
+
+    return (
+      <Spine
+        className={classes.root}
+        jsonUrl="spine/spineboy-pro.json"
+        atlasUrl="spine/spineboy.atlas"
+        animation="walk"
+        ref={playerRef}
+      />
+    );
+  }
+  ```
+
+- You may also use the `useSpine` hook
+
+  ```tsx
+  import { useSpine } from '@/hooks/useSpine.tsx';
+  import classes from './SpineAniamtion.module.scss';
+
+  function SpineAnimation() {
+    const [spinRef, player] = useSpine({
+      jsonUrl: 'spine/spineboy-pro.json',
+      atlasUrl: 'spine/spineboy.atlas',
+      animation: 'walk'
+    });
+
+    useEffect(() => {
+      if (!player) return;
+      // do some thing you need
+    }, [player]);
+
+    return <div className={classes.root} ref={spinRef}></div>;
+  }
+  ```
