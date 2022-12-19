@@ -76,7 +76,7 @@ The below content will be prepended into each `.sass` file before compilation. S
 
 ```scss
 @use 'src/styles/sass/variables' as vars;
-@use 'src/styles/sass/index.scss';
+@use 'src/styles/sass/index.scss' as *;
 ```
 
 This feature controlled in `app.config.js` which is an option of [sass-loder](https://webpack.js.org/loaders/sass-loader/)
