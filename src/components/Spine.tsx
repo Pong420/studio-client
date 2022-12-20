@@ -3,15 +3,15 @@ import { SpinePlayer, useSpine, UseSpineOption } from '@/hooks/useSpine';
 
 export type { SpinePlayer };
 
-export interface SpineComponentProps extends UseSpineOption {}
+export interface SpineComponentProps extends UseSpineOption, React.ComponentProps<'div'> {}
 
 function SpineComponent(
-  { jsonUrl, atlasUrl, animation, config }: SpineComponentProps,
+  { jsonUrl, atlasUrl, animation, config, ...divProps }: SpineComponentProps,
   ref: Ref<SpinePlayer | undefined>
 ) {
   const [nodeRef, spine] = useSpine({ jsonUrl, atlasUrl, animation, config });
   useImperativeHandle(ref, () => spine, [spine]);
-  return <div ref={nodeRef} />;
+  return <div {...divProps} ref={nodeRef} />;
 }
 
 export const Spine = forwardRef(SpineComponent);
