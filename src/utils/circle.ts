@@ -15,14 +15,19 @@ export type ItemStyles = ReturnType<typeof getCycleStyles>['items'][number];
 export function getCycleStyles({ total, itemSize, adjustment = 0, spcae = 0.1 }: GetCyclesStylesOption) {
   const tan = Math.max(0, Math.tan(Math.PI / total));
   const radius = ((1 + adjustment + spcae) * 0.5 * itemSize) / tan; // circle radius
-  const circleSize = 2 * radius + itemSize;
+  let circleSize = 2 * radius + itemSize;
+
+  if (circleSize === Infinity) {
+    circleSize = itemSize;
+  }
 
   const root: React.CSSProperties = {};
 
   const circle: React.CSSProperties = {
     position: 'relative',
     width: `${circleSize}em`,
-    height: `${circleSize}em`
+    height: `${circleSize}em`,
+    clipPath: `circle(50%)`
   };
 
   const items = Array.from({ length: total }, (_, i) => {
