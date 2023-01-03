@@ -1,0 +1,7 @@
+@mixin shadow-border($x: 0, $y: 0, $b: 0, $s: 1px, $divider-color: #000) {
+  // prettier-ignore
+  box-shadow: 
+    $x $y $b $s $divider-color, 
+    0 0 0 rgba(#000, 0),
+    0 0 0 rgba(#000, 0);
+}

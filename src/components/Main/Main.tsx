@@ -1,49 +1,24 @@
-import { useEffect, useState } from 'react';
-import { Circle, CircleProps } from '@/components/Circle';
+import React from 'react';
 import classes from './Main.module.scss';
+import { getSectorPoints } from '@/utils/sector';
 
-const ItemSize = 5;
-const circles: Pick<CircleProps, 'total' | 'adjustment'>[] = [
-  {
-    total: 16,
-    adjustment: 0.01
-  },
-  {
-    total: 8,
-    adjustment: 0.15
-  },
-  {
-    total: 1
-  }
-];
+export interface MainProps {
+  top?: React.ReactNode;
+  bottom?: React.ReactNode;
+  background?: boolean;
+}
 
-export function Main() {
-  const [expand, setExpand] = useState(true);
+const sectorStyles: React.CSSProperties = {
+  clipPath: `polygon(${getSectorPoints(75.5)})`
+};
 
-  useEffect(() => {
-    const onClick = () => {
-      setExpand(e => !e);
-    };
-    window.addEventListener('click', onClick);
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  }, []);
-
+export function Main({ top, bottom, background }: MainProps) {
   return (
-    <div className={classes.root}>
-      {circles.map((props, i) => {
-        return (
-          <Circle
-            key={i}
-            className={classes.circle}
-            expand={expand}
-            itemSize={ItemSize}
-            start={circles.slice(0, i).reduce((s, i) => s + i.total, 0)}
-            {...props}
-          />
-        );
-      })}
+    <div className={[classes.root, background && classes.background].filter(Boolean).join(' ').trim()}>
+      <div className={classes.top} style={sectorStyles}>
+        <div className={classes.inner}>{top}</div>
+      </div>
+      <div className={classes.bottom}>{bottom}</div>
     </div>
   );
 }

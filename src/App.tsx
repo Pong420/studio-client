@@ -1,9 +1,9 @@
-import { Main } from './components/Main/Main';
+import { BonusPick } from './components/BonusPick/BonusPick';
 
 function App() {
   return (
     <>
-      <Main />
+      <BonusPick />
     </>
   );
 }
