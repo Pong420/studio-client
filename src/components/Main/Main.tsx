@@ -22,9 +22,9 @@ export function Main({ top, bottom, aligment, background }: MainProps) {
         .trim()}
     >
       <div className={classes.sector} style={sectorStyles}>
-        <div className={classes.border}></div>
+        <div className={classes.ring} />
         <div className={classes.top}>{top}</div>
-        <div className={classes.blocker}></div>
+        <div className={classes.blocker} />
       </div>
       <div className={classes.bottom}>{bottom}</div>
     </div>
