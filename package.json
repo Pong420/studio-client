@@ -16,6 +16,7 @@
     "@esotericsoftware/spine-core": "^4.2.10",
     "@esotericsoftware/spine-player": "^4.2.10",
     "@esotericsoftware/spine-webgl": "^4.2.10",
+    "@react-spring/web": "^9.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",

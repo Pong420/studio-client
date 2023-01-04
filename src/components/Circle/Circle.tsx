@@ -1,11 +1,22 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
+import { SpringValue, animated } from '@react-spring/web';
 import { GetCyclesStylesOption, getCycleStyles } from '@/utils/circle';
 import classes from './Circle.module.scss';
 
 export interface CircleProps extends GetCyclesStylesOption, React.ComponentProps<'div'> {
-  start?: number;
-  expand?: boolean;
-  delay?: number;
+  start?: number; // the start index
+  delay?: number; // transiation delay in second
+  rotate?: SpringValue<number>;
+  variant?: keyof ReturnType<typeof getCycleStyles>['items'][number];
+  renderItem?: (index: number, style: React.CSSProperties) => React.ReactNode;
+}
+
+export function CircleItem(props: React.ComponentProps<'div'>) {
+  return (
+    <div {...props} className={classes.item}>
+      <div className={classes.text}>{props.children}</div>
+    </div>
+  );
 }
 
 export function Circle({
@@ -13,11 +24,17 @@ export function Circle({
   itemSize,
   adjustment,
   spcae,
-  expand = true,
+  rotate,
   start = 0,
   delay = 0,
   children,
-  ...props
+  variant = 'default',
+  renderItem = (index, style) => (
+    <CircleItem key={index} style={style}>
+      {index}
+    </CircleItem>
+  ),
+  ...divProps
 }: CircleProps) {
   const styles = useMemo(
     () => getCycleStyles({ total, itemSize, adjustment, spcae }),
@@ -25,21 +42,17 @@ export function Circle({
   );
 
   return (
-    <div {...props} style={styles.root}>
-      <div style={styles.circle}>
+    <div {...divProps} style={styles.root}>
+      <animated.div style={{ ...styles.circle, rotate }}>
         {styles.items.map((styles, i) => {
           const index = i + start;
           const style: React.CSSProperties = {
-            ...(expand ? styles.expand : styles.center),
+            ...styles[variant],
             transitionDelay: `${delay * index}s`
           };
-          return (
-            <div key={i} className={classes.item} style={style}>
-              <div className={classes.text}>{index}</div>
-            </div>
-          );
+          return renderItem(index, style);
         })}
-      </div>
+      </animated.div>
     </div>
   );
 }

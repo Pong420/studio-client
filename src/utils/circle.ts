@@ -38,17 +38,19 @@ export function getCycleStyles({ total, itemSize, adjustment = 0, spcae = 0.1 }:
       left: `50%`,
       width: `${itemSize}em`,
       height: `${itemSize}em`,
-      margin: `${itemSize * -0.5}em`,
-      transform: `rotate(${rotate}deg) translate(${(circleSize - itemSize) * 0.5}em) rotate(${rotate * -1}deg)`
+      margin: `${itemSize * -0.5}em`
     };
-    const transform = (translate: number) => `rotate(${rotate}deg) translate(${translate}em) rotate(${rotate * -1}deg)`;
+    const transform = ({ translate: t = (circleSize - itemSize) * 0.5, rotate: r = rotate * -1 }) =>
+      `rotate(${rotate}deg) translate(${t}em) rotate(${r}deg)`;
 
-    const expand: React.CSSProperties = { ...css };
-    const center: React.CSSProperties = { ...css, transform: transform(0) };
+    const _default: React.CSSProperties = { ...css, transform: transform({}) };
+    const rotated: React.CSSProperties = { ...css, transform: transform({ rotate: 90 }) };
+    const center: React.CSSProperties = { ...css, transform: transform({ translate: 0 }) };
 
     return {
-      expand,
-      center
+      rotated,
+      center,
+      default: _default
     };
   });
 

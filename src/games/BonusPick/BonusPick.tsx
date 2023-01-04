@@ -1,57 +1,27 @@
-import { useEffect, useState } from 'react';
-import { Circle, CircleProps } from '@/components/Circle';
+import { useRef } from 'react';
 import { Main } from '@/components/Main';
-import classes from './BonusPick.module.scss';
+import { BonusRing, BonusRingController } from './BonusRing';
+import { BonusCircle } from './BonusCircle';
 
-const ItemSize = 5;
-const circles: Pick<CircleProps, 'total' | 'adjustment'>[] = [
-  {
-    total: 16,
-    adjustment: 0.01
-  },
-  {
-    total: 8,
-    adjustment: 0.15
-  },
-  {
-    total: 1
-  }
-];
+let multipliers = [2, 3, 4, 5, 10, 15, 20, 25, 30, 40, 50, 100];
+while (multipliers.length < 32) {
+  multipliers = [...multipliers, ...multipliers].slice(0, 32);
+}
 
 export function BonusPick() {
-  const [expand, setExpand] = useState(true);
-
-  useEffect(() => {
-    const onClick = () => {
-      setExpand(e => !e);
-    };
-    window.addEventListener('click', onClick);
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  }, []);
+  const ringRef = useRef<BonusRingController>(null);
 
   return (
     <Main
       // aligment
-      // background
-      // top={<div className={classes.test} />}
-      bottom={
-        <>
-          {circles.map((props, i) => {
-            return (
-              <Circle
-                key={i}
-                className={classes.circle}
-                expand={expand}
-                itemSize={ItemSize}
-                start={circles.slice(0, i).reduce((s, i) => s + i.total, 0)}
-                {...props}
-              />
-            );
-          })}
-        </>
-      }
-    ></Main>
+      background
+      top={<BonusRing ref={ringRef} />}
+      bottom={<BonusCircle />}
+      buttons={[
+        { text: 'ring.start', onClick: () => ringRef.current?.start(multipliers) },
+        { text: 'ring.rotate', onClick: () => ringRef.current?.rotate() },
+        { text: 'ring.end', onClick: () => ringRef.current?.end() }
+      ]}
+    />
   );
 }
