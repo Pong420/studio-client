@@ -33,6 +33,7 @@ export function BonusPick() {
 
   return (
     <Main
+      // aligment
       // background
       // top={<div className={classes.test} />}
       bottom={

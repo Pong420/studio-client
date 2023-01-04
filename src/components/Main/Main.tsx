@@ -5,6 +5,7 @@ import { getSectorPoints } from '@/utils/sector';
 export interface MainProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
+  aligment?: boolean;
   background?: boolean;
 }
 
@@ -12,9 +13,14 @@ const sectorStyles: React.CSSProperties = {
   clipPath: `polygon(${getSectorPoints(75)})`
 };
 
-export function Main({ top, bottom, background }: MainProps) {
+export function Main({ top, bottom, aligment, background }: MainProps) {
   return (
-    <div className={[classes.root, background && classes.background].filter(Boolean).join(' ').trim()}>
+    <div
+      className={[classes.root, aligment && classes.aligment, background && classes.background]
+        .filter(Boolean)
+        .join(' ')
+        .trim()}
+    >
       <div className={classes.sector} style={sectorStyles}>
         <div className={classes.border}></div>
         <div className={classes.top}>{top}</div>

@@ -1,11 +1,8 @@
-import { BonusPick } from './components/BonusPick/BonusPick';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes';
 
 function App() {
-  return (
-    <>
-      <BonusPick />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
