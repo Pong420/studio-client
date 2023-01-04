@@ -1,4 +1,3 @@
-$background: rgba(255, 255, 255, 0.5);
 $dimBackground: rgba(0, 0, 0, 0.5);
 
 .root {
@@ -12,12 +11,16 @@ $dimBackground: rgba(0, 0, 0, 0.5);
   width: 576px;
   height: 768px;
 
+  overflow: hidden;
+
   @include shadow-border(0, 0, 0px, 1px);
 
   &.aligment {
     background-image: url(../../assets/background.png);
     background-repeat: no-repeat;
     background-size: contain;
+
+    $background: rgba(255, 255, 255, 0.5);
 
     .sector {
       background-color: $background;
