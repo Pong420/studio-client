@@ -34,6 +34,7 @@ export function BonusPick() {
   return (
     <Main
       // background
+      // top={<div className={classes.test} />}
       bottom={
         <>
           {circles.map((props, i) => {
