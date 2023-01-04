@@ -2,12 +2,26 @@ $dimBackground: rgba(0, 0, 0, 0.2);
 
 .root {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
+  width: 100%;
+  height: 100%;
 
+  display: flex;
+  justify-self: center;
+  align-items: center;
+
+  > * {
+    margin: auto;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.main {
+  position: relative;
   width: 576px;
   height: 768px;
 
