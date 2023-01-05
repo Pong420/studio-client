@@ -44,7 +44,7 @@ function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleCont
           : Promise.all(
               circles.start(idx => ({
                 from: { rotate: 0 },
-                to: { rotate: 360 * factor },
+                to: { rotate: 360 * factor * (idx % 2 === 0 ? 1 : -1) },
                 delay: idx * 50
               }))
             ).then(() => !stop && rotate(factor * -1));
