@@ -6,9 +6,9 @@ import classes from './BonusRing.module.scss';
 export interface BonusRingProps {}
 
 export interface BonusRingController {
-  start: (multipliers: number[]) => void;
-  rotate: () => void;
-  end: () => void;
+  start: (multipliers: number[]) => Promise<void>;
+  rotate: () => Promise<void>;
+  end: () => Promise<void>;
 }
 
 function BonusRingComponent(_props: BonusRingProps, ref: Ref<BonusRingController>) {
@@ -16,19 +16,23 @@ function BonusRingComponent(_props: BonusRingProps, ref: Ref<BonusRingController
   const [{ rotate, ...ringStyle }, ring] = useSpring(() => ({ opacity: 0, rotate: 0 }));
 
   useImperativeHandle(ref, () => ({
-    start: (multipliers: number[]) => {
+    start: async (multipliers: number[]) => {
       setMultipliers(multipliers);
-      ring.start({
-        from: { opacity: 0 },
-        to: { opacity: 1 }
-      });
+      await Promise.all(
+        ring.start({
+          from: { opacity: 0 },
+          to: { opacity: 1 }
+        })
+      );
     },
-    rotate: () => {
-      ring.start((_, ctrl) => {
-        return {
-          to: { rotate: ctrl.get().rotate + (0.75 / 2) * 360 }
-        };
-      });
+    rotate: async () => {
+      await Promise.all(
+        ring.start((_, ctrl) => {
+          return {
+            to: { rotate: ctrl.get().rotate + (0.75 / 2) * 360 }
+          };
+        })
+      );
     },
     end: async () => {
       await Promise.all(
@@ -42,7 +46,7 @@ function BonusRingComponent(_props: BonusRingProps, ref: Ref<BonusRingController
   }));
 
   return (
-    <animated.div style={{ ...ringStyle }}>
+    <animated.div style={ringStyle}>
       <Circle
         variant="rotated"
         className={classes.root}

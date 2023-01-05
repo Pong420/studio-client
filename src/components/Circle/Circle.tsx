@@ -7,6 +7,7 @@ export interface CircleProps extends GetCyclesStylesOption, React.ComponentProps
   start?: number; // the start index
   delay?: number; // transiation delay in second
   rotate?: SpringValue<number>;
+  opacity?: SpringValue<number>;
   variant?: keyof ReturnType<typeof getCycleStyles>['items'][number];
   renderItem?: (index: number, style: React.CSSProperties) => React.ReactNode;
 }
@@ -25,6 +26,7 @@ export function Circle({
   adjustment,
   spcae,
   rotate,
+  opacity,
   start = 0,
   delay = 0,
   children,
@@ -43,7 +45,7 @@ export function Circle({
 
   return (
     <div {...divProps} style={styles.root}>
-      <animated.div style={{ ...styles.circle, rotate }}>
+      <animated.div style={{ ...styles.circle, rotate, opacity }}>
         {styles.items.map((styles, i) => {
           const index = i + start;
           const style: React.CSSProperties = {
