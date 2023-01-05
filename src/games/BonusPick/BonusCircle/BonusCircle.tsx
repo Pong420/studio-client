@@ -38,10 +38,16 @@ function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleCont
     },
     rotate: async () => {
       let stop = false;
-      const rotate = (factor = 1): Promise<unknown> =>
-        Promise.all(circles.start({ from: { rotate: 0 }, to: { rotate: 360 * factor } })).then(
-          () => !stop && rotate(factor * -1)
-        );
+      const rotate = async (factor = 1): Promise<unknown> =>
+        circles.current.some(c => !c.idle)
+          ? void 0
+          : Promise.all(
+              circles.start(idx => ({
+                from: { rotate: 0 },
+                to: { rotate: 360 * factor },
+                delay: idx * 50
+              }))
+            ).then(() => !stop && rotate(factor * -1));
       rotate();
       await scale.start(0.5);
       await scale.start(1);

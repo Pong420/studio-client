@@ -1,6 +1,6 @@
 import React from 'react';
-import classes from './Main.module.scss';
 import { getSectorPoints } from '@/utils/sector';
+import classes from './Main.module.scss';
 
 export interface MainProps {
   top?: React.ReactNode;
@@ -10,8 +10,10 @@ export interface MainProps {
   buttons?: (React.ComponentProps<'button'> & { text: string })[];
 }
 
+export const ExtensionAngle = 75;
+
 const sectorStyles: React.CSSProperties = {
-  clipPath: `polygon(${getSectorPoints(75)})`
+  clipPath: `polygon(${getSectorPoints(ExtensionAngle)})`
 };
 
 export function Main({ top, bottom, aligment, background, buttons }: MainProps) {
