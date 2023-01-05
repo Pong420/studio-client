@@ -6,12 +6,10 @@ $dimBackground: rgba(0, 0, 0, 0.2);
   height: 100%;
 
   display: flex;
-  justify-self: center;
   align-items: center;
+  justify-content: center;
 
-  > * {
-    margin: auto;
-  }
+  gap: 20px;
 }
 
 .buttons {
