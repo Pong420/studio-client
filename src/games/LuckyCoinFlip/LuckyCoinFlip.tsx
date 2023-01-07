@@ -6,7 +6,7 @@ import { LuckyCoin } from './LuckyCoin/LuckyCoin';
 
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 
-const Coin = <LuckyCoin color="red" value="123" style={{ width: '15em' }} />;
+const Coin = <LuckyCoin color="red" value="123" style={{ width: '15em' }} glow />;
 const CountDown = <LuckyCoinCountDown />;
 
 export function LuckyCoinFlip() {
