@@ -17,7 +17,7 @@ export function useAssets(this: any) {
 }
 
 export function AssetsProvider({ children, assetsCtx: ctx }: AssetsProvderProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [assets, setAssets] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -28,7 +28,12 @@ export function AssetsProvider({ children, assetsCtx: ctx }: AssetsProvderProps)
       await Promise.all(
         ctx.keys().map(async k => {
           const path = ctx(k);
-          await fetch(path);
+          const image = new Image();
+          await new Promise((resolve, reject) => {
+            image.src = path;
+            image.onload = resolve;
+            image.onerror = reject;
+          });
           assets[k.replace(/^\.\//, '')] = path;
         })
       );
@@ -36,7 +41,6 @@ export function AssetsProvider({ children, assetsCtx: ctx }: AssetsProvderProps)
       setLoading(false);
     };
 
-    setLoading(true);
     preload();
   }, [ctx]);
 
