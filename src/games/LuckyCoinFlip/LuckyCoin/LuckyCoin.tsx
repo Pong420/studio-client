@@ -12,7 +12,14 @@ export function LuckyCoin({ value, color, className = '', ...divProps }: LuckyCo
   return (
     <div {...divProps} className={`${classes.root} ${className}`.trim()}>
       <img src={assets[`bg_coin_${color}_large.png`]} alt="" />
-      <LuckyCoinMultiplier value={value} color={color} className={classes.multiplier} classes={classes} />
+      <div className={classes.multiplier}>
+        <LuckyCoinMultiplier
+          value={value}
+          color={color}
+          className={classes[`length_${value.length}`]}
+          classes={classes}
+        />
+      </div>
     </div>
   );
 }
