@@ -1,0 +1,17 @@
+$blur: 10;
+$factor: 1000;
+
+.root {
+  position: relative;
+  height: 100%;
+}
+
+.blurredWrapper {
+  position: absolute;
+  filter: blur($blur * 2px);
+  transform: scale($blur, calc(1 / $factor));
+}
+
+.blurred {
+  transform: scale(calc(1 / $blur), $factor);
+}

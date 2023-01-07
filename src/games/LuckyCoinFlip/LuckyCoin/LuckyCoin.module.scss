@@ -1,5 +1,7 @@
+@use '../LuckyCoinMultiplier/LuckyCoinMultiplier.scss' as *;
+
 .root {
-  position: relative;
+  @include abs-center;
 
   img {
     width: 100%;
@@ -13,4 +15,13 @@
   right: 0;
   bottom: 0;
   padding: 10%;
+
+  .length_1,
+  .length_2 {
+    @include scale(50%);
+  }
+
+  .length_3 {
+    @include scale(37%);
+  }
 }

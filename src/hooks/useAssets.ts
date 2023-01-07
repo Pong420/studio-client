@@ -17,7 +17,7 @@ export function useAssets(this: any) {
 }
 
 export function AssetsProvider({ children, assetsCtx: ctx }: AssetsProvderProps) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!ctx);
   const [assets, setAssets] = useState<Record<string, string>>({});
 
   useEffect(() => {

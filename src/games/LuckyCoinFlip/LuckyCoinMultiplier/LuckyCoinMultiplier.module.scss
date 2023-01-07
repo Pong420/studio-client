@@ -3,39 +3,4 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-
-  @mixin scale($size) {
-    .symbol {
-      width: calc($size / 2);
-      margin-top: calc($size / 4);
-    }
-
-    .number {
-      height: $size;
-    }
-  }
-
-  &.length_1,
-  &.length_2 {
-    @include scale(50%);
-  }
-
-  &.length_3 {
-    @include scale(37%);
-  }
-
-  .symbol {
-    flex: 0 0 auto;
-
-    img {
-      width: 100%;
-    }
-  }
-
-  .number {
-    img {
-      width: auto;
-      height: 100%;
-    }
-  }
 }

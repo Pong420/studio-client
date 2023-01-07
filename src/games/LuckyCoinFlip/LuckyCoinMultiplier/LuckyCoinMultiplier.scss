@@ -1,0 +1,15 @@
+@mixin scale($size) {
+  .symbol {
+    width: calc($size / 2);
+    margin-top: calc($size / 4);
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .number {
+    height: $size;
+  }
+}

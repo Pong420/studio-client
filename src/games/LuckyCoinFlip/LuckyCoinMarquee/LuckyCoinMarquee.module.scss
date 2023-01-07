@@ -1,0 +1,17 @@
+@use '../LuckyCoinMultiplier/LuckyCoinMultiplier.scss' as *;
+
+.root {
+  @include abs-center;
+  left: 100%;
+
+  display: flex;
+  gap: 2em;
+}
+
+.multiplier {
+  @include scale(7.5em);
+
+  img {
+    height: 100%;
+  }
+}
