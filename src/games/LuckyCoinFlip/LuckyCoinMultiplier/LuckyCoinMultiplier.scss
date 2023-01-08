@@ -5,7 +5,7 @@
 @mixin scale($size) {
   .symbol {
     width: calc($size / 2);
-    margin-top: calc($size / 4);
+    margin-top: calc($size / 4.5);
 
     img {
       width: 100%;
@@ -15,5 +15,13 @@
 
   .number {
     height: $size;
+
+    + .number {
+      margin-left: $size * 0.1;
+    }
+
+    img {
+      height: 100%;
+    }
   }
 }
