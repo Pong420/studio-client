@@ -1,8 +1,8 @@
-import { Ref, forwardRef, useImperativeHandle, useMemo, useRef, useState } from 'react';
-import { animated, to, config, useSpringValue } from '@react-spring/web';
+import { Ref, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import { animated, to, useSpringValue } from '@react-spring/web';
+import { MotionBlur } from '@/components/MotionBlur';
 import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import classes from './LuckyCoinMarquee.module.scss';
-import { MotionBlur } from '@/components/MotionBlur';
 
 export interface LuckyCoinMarqueeProps {
   multipliers: number[];
@@ -10,8 +10,8 @@ export interface LuckyCoinMarqueeProps {
 
 export interface LuckyCoinMarqueeHandler {
   enter: () => Promise<void>;
-  start: () => Promise<void>;
-  stop: (idx: number) => Promise<void>;
+  start: () => Promise<unknown>;
+  stop: (idx: number) => Promise<unknown>;
 }
 
 const EnterDuration = 2000;
@@ -35,34 +35,38 @@ function LuckyCoinMarqueeComponent(
   const getTotalWidth = () => marqueeRef.current?.offsetWidth ?? 0;
   const getVisibleWidth = () => marqueeRef.current?.parentElement?.offsetWidth ?? 0;
 
+  useEffect(() => {
+    console.info('initial multipliers', initialMultipliers);
+  }, [initialMultipliers]);
+
   useImperativeHandle(ref, () => {
-    const setup = ({ acceleration = Acceleration }) => {
+    const setup = () => {
       let resolve: any;
 
-      const promise = new Promise(r => {
+      const promise = new Promise<number>(r => {
         resolve = r;
       });
 
-      const play = (velocity: number, shouldStop = (_velocity: number) => false) => {
-        translate.stop();
+      interface PlayOption {
+        from?: number;
+        to?: number;
+        velocity?: number;
+        repeat?: number;
+        acceleration?: number;
+      }
 
-        velocity = Math.max(Math.min(velocity, MaxVelocity), InitialVelocity);
+      const play = async (option: PlayOption) => {
+        translate.stop();
 
         let now = Date.now();
 
         const totalWidth = getTotalWidth();
         const target = -totalWidth / 3;
-        const to = -totalWidth * (2 / 3);
-        const from = translate.get();
+        const velocity = Math.max(Math.min(option.velocity ?? InitialVelocity, MaxVelocity), InitialVelocity);
+        const { from = translate.get(), to = -totalWidth * (2 / 3), repeat = -1, acceleration = 0 } = option;
         const duration = (Math.abs(to) - Math.abs(from)) / velocity;
 
-        if (shouldStop(velocity)) {
-          return resolve();
-        }
-
-        if (velocity === MaxVelocity) {
-          setBlur(true);
-        }
+        setBlur(velocity >= MaxVelocity / 2);
 
         translate.start({
           from,
@@ -73,14 +77,18 @@ function LuckyCoinMarqueeComponent(
           onChange() {
             const dt = Date.now() - now;
             if (dt >= VelocityFequency) {
-              play(velocity + acceleration, shouldStop);
+              play({ ...option, velocity: velocity + acceleration });
               now += dt;
             }
           },
           onRest(r) {
             if (r.finished) {
-              translate.set(target);
-              setTimeout(() => play(velocity, shouldStop), 1);
+              if (repeat !== 0) {
+                translate.set(target);
+                setTimeout(() => play({ ...option, repeat: repeat - 1 }), 1);
+              } else {
+                resolve(velocity);
+              }
             }
           }
         });
@@ -90,14 +98,14 @@ function LuckyCoinMarqueeComponent(
       return play;
     };
 
-    const start = setup({});
-    // const stop = setup({ acceleration: -0.1 });
+    const start = setup();
+    const stop = setup();
 
     return {
       enter: async () => {
         await translate.start({ from: 0, to: -getTotalWidth() / 3, config: { duration: EnterDuration } });
       },
-      start: () => start(InitialVelocity),
+      start: () => start({ velocity: InitialVelocity, acceleration: Acceleration }),
       stop: async idx => {
         if (idx >= initialMultipliers.length) {
           return console.warn(`wrong index`);
@@ -109,25 +117,19 @@ function LuckyCoinMarqueeComponent(
           return console.warn(anchor, ` is is not a HTML element`);
         }
 
-        // await stop(MaxVelocity, v => {
-        //   return v <= 1;
-        // });
-
-        const totalWidth = getTotalWidth();
-        const current = translate.get();
         const to = -anchor.offsetLeft - getVisibleWidth() / 2 - anchor.offsetWidth / 2;
+
+        const velocity = await stop({ velocity: MaxVelocity, repeat: 2, acceleration: -Acceleration });
 
         setBlur(false);
 
-        translate.start({
-          from: current <= to ? current + totalWidth / 3 : current,
-          to,
-          config: {
-            ...config.molasses,
-            bounce: 0,
-            clamp: true
-          }
-        });
+        const totalWidth = getTotalWidth();
+        const current = translate.get();
+        translate.set(current <= to ? current + totalWidth / 3 : current);
+
+        await stop({ to, repeat: 0, velocity });
+
+        setBlur(false);
       }
     };
   });
@@ -148,7 +150,7 @@ function LuckyCoinMarqueeComponent(
             classes={classes}
           />
         );
-        return blur && i >= 9 ? <MotionBlur key={i}>{node}</MotionBlur> : node;
+        return blur ? <MotionBlur key={i}>{node}</MotionBlur> : node;
       })}
     </animated.div>
   );

@@ -1,10 +1,10 @@
 {
   "*.{js,jsx}": [
-    "eslint --rule 'no-console: [\"error\", { allow: [\"warn\", \"error\", \"debug\"] }]' --rule 'no-debugger: [\"error\"]' --max-warnings=0",
+    "eslint --rule 'no-console: [\"error\", { allow: [\"warn\", \"error\", \"debug\", \"info\"] }]' --rule 'no-debugger: [\"error\"]' --max-warnings=0",
     "prettier --ignore-path .eslintignore --write"
   ],
   "*.{ts,tsx}": [
-    "eslint --rule 'no-console: [\"error\", { allow: [\"warn\", \"error\", \"debug\"] }]' --rule 'no-debugger: [\"error\"]' --max-warnings=0",
+    "eslint --rule 'no-console: [\"error\", { allow: [\"warn\", \"error\", \"debug\", \"info\"] }]' --rule 'no-debugger: [\"error\"]' --max-warnings=0",
     "bash -c \"tsc --noEmit\"",
     "prettier --ignore-path .eslintignore --write"
   ],
