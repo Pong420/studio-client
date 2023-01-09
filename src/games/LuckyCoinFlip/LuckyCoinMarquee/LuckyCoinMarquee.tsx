@@ -60,10 +60,12 @@ function LuckyCoinMarqueeComponent(
 
         let now = Date.now();
 
+        const direction = -1; // -1 from right to left
         const totalWidth = getTotalWidth();
-        const target = -totalWidth / 3;
+        const oneThirdWidth = totalWidth / 3;
+        const twoThirdWidth = totalWidth * (2 / 3);
         const velocity = Math.max(Math.min(option.velocity ?? InitialVelocity, MaxVelocity), InitialVelocity);
-        const { from = translate.get(), to = -totalWidth * (2 / 3), repeat = -1, acceleration = 0 } = option;
+        const { from = translate.get(), to = twoThirdWidth * direction, repeat = -1, acceleration = 0 } = option;
         const duration = (Math.abs(to) - Math.abs(from)) / velocity;
 
         setBlur(velocity >= MaxVelocity / 2);
@@ -84,7 +86,7 @@ function LuckyCoinMarqueeComponent(
           onRest(r) {
             if (r.finished) {
               if (repeat !== 0) {
-                translate.set(target);
+                translate.set(oneThirdWidth * direction);
                 setTimeout(() => play({ ...option, repeat: repeat - 1 }), 1);
               } else {
                 resolve(velocity);

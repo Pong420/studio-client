@@ -1,0 +1,8 @@
+.root {
+  @include abs-center;
+  width: 50%;
+}
+
+.coin {
+  border-radius: 50%;
+}

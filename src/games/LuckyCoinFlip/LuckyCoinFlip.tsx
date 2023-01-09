@@ -3,6 +3,7 @@ import { Main } from '@/components/Main';
 import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
 import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
+import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
 
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 
@@ -50,11 +51,13 @@ const Coin = (
 
 const CountDown = <LuckyCoinCountDown />;
 
+const Result = <LuckyCoinFlipResult value="17" color="blue" />;
+
 export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
   const [Marquee] = useState(<LuckyCoinMarquee multipliers={multipliers} ref={marquee} />);
-  const [bottom, setBottom] = useState<ReactNode>(Marquee);
+  const [bottom, setBottom] = useState<ReactNode>(Result);
 
   return (
     <Main
@@ -66,7 +69,7 @@ export function LuckyCoinFlip() {
           text: 'toggle',
           onClick: () => {
             setBottom(b => {
-              const list: any[] = [Marquee, Coin, CountDown];
+              const list: any[] = [Marquee, Coin, CountDown, Result];
               const idx = list.findIndex(l => l === b);
               return list[idx === list.length - 1 ? 0 : idx + 1];
             });

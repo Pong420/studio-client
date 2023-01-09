@@ -8,6 +8,8 @@ export interface LuckyCoinProps extends React.ComponentProps<'div'> {
   glow?: boolean;
 }
 
+export const shadowColor = classes['shadowColor'];
+
 export function LuckyCoin({ value, color, glow, className = '', ...divProps }: LuckyCoinProps) {
   const { assets } = useAssets();
   return (
