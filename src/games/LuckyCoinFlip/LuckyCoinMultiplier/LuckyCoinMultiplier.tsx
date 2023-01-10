@@ -1,4 +1,3 @@
-import { useAssets } from '@/hooks/useAssets';
 import _classes from './LuckyCoinMultiplier.module.scss';
 
 export interface MultiplierProps extends React.ComponentProps<'div'> {
@@ -8,8 +7,7 @@ export interface MultiplierProps extends React.ComponentProps<'div'> {
 }
 
 export function LuckyCoinMultiplier({ value, color, className = '', classes = {}, ...props }: MultiplierProps) {
-  const { assets } = useAssets();
-  const getImage = (n: string) => assets[`text_coin_${color}/txt_${color}_coin_${n}.png`];
+  const getImage = (n: string) => require(`../assets/text_coin_${color}/txt_${color}_coin_${n}.png`);
 
   return (
     <div {...props} className={`${_classes.root} ${className}`.trim()}>

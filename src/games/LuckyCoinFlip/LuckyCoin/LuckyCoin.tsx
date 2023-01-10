@@ -1,4 +1,3 @@
-import { useAssets } from '@/hooks/useAssets';
 import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import classes from './LuckyCoin.module.scss';
 
@@ -11,10 +10,9 @@ export interface LuckyCoinProps extends React.ComponentProps<'div'> {
 export const shadowColor = classes['shadowColor'];
 
 export function LuckyCoin({ value, color, glow, className = '', ...divProps }: LuckyCoinProps) {
-  const { assets } = useAssets();
   return (
     <div {...divProps} className={[classes.root, className, glow && classes.glow].filter(Boolean).join(' ').trim()}>
-      <img src={assets[`bg_coin_${color}_large.png`]} alt="" />
+      <img src={require(`../assets/bg_coin_${color}_large.png`)} alt="" />
       <div className={classes.multiplier}>
         <LuckyCoinMultiplier
           value={value}

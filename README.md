@@ -81,27 +81,15 @@ The below content will be prepended into each `.sass` file before compilation. S
 
 This feature controlled in `app.config.js` which is an option of [sass-loder](https://webpack.js.org/loaders/sass-loader/)
 
-### Image/Assets
+### Preload Images
 
-To use image inside a componment.
-
-1. Define the assets context and assgin to the `Main` Component
+Define the assets context and assgin to the `Main` Component
 
 ```tsx
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 
 export function LuckyCoinFlip() {
   return <Main background assetsCtx={assetsCtx} />;
-}
-```
-
-2. Then use it
-
-```tsx
-function SomeComponent() {
-  const { assets } = useAssets();
-  console.log(assets);
-  return <img src={assets['text_coin_blue/txt_blue_coin_0.png']} />;
 }
 ```
 

@@ -11,6 +11,7 @@
     "component": "node scripts/component.js"
   },
   "dependencies": {
+    "@ct/common-component": "^1.1.24",
     "@ct/react-scripts": "^1.1.0",
     "@esotericsoftware/spine-canvas": "^4.2.10",
     "@esotericsoftware/spine-core": "^4.2.10",

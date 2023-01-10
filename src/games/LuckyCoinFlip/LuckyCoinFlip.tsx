@@ -57,7 +57,7 @@ export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
   const [Marquee] = useState(<LuckyCoinMarquee multipliers={multipliers} ref={marquee} />);
-  const [bottom, setBottom] = useState<ReactNode>(Result);
+  const [bottom, setBottom] = useState<ReactNode>(Marquee);
 
   return (
     <Main

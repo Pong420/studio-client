@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useAssets } from '@/hooks/useAssets';
 import classes from './LuckyCoinCountDown.module.scss';
 
 const color = 'red';
 
 export function LuckyCoinCountDown() {
-  const { assets } = useAssets();
   const [count, setCount] = useState(3);
 
   useEffect(() => {
@@ -19,7 +17,7 @@ export function LuckyCoinCountDown() {
 
   return (
     <div className={classes.root} key={count}>
-      <img src={assets[`text_coin_${color}/txt_${color}_coin_${count}.png`]} alt="" />
+      <img src={require(`../assets/text_coin_${color}/txt_${color}_coin_${count}.png`)} alt="" />
     </div>
   );
 }
