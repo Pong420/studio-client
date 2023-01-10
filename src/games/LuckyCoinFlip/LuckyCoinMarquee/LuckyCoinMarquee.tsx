@@ -1,6 +1,7 @@
 import { Ref, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { animated, to, useSpringValue } from '@react-spring/web';
 import { MotionBlur } from '@/components/MotionBlur';
+import { Logger } from '@/utils/logger';
 import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import classes from './LuckyCoinMarquee.module.scss';
 
@@ -20,6 +21,8 @@ const MaxVelocity = 3;
 const VelocityFequency = 250;
 const Acceleration = 0.1;
 
+const logger = Logger.create(`LuckCoinFlip`);
+
 function LuckyCoinMarqueeComponent(
   { multipliers: initialMultipliers }: LuckyCoinMarqueeProps,
   ref: Ref<LuckyCoinMarqueeHandler>
@@ -36,7 +39,7 @@ function LuckyCoinMarqueeComponent(
   const getVisibleWidth = () => marqueeRef.current?.parentElement?.offsetWidth ?? 0;
 
   useEffect(() => {
-    console.info('initial multipliers', initialMultipliers);
+    logger.info('initial multipliers', initialMultipliers);
   }, [initialMultipliers]);
 
   useImperativeHandle(ref, () => {
@@ -110,13 +113,13 @@ function LuckyCoinMarqueeComponent(
       start: () => start({ velocity: InitialVelocity, acceleration: Acceleration }),
       stop: async idx => {
         if (idx >= initialMultipliers.length) {
-          return console.warn(`wrong index`);
+          return logger.warn(`wrong index`);
         }
 
         const anchor = marqueeRef.current?.children[initialMultipliers.length + idx];
 
         if (!anchor || !(anchor instanceof HTMLElement)) {
-          return console.warn(anchor, ` is is not a HTML element`);
+          return logger.warn(`Expect anchor is a HTML element but receive`, anchor);
         }
 
         const to = -anchor.offsetLeft - getVisibleWidth() / 2 - anchor.offsetWidth / 2;
