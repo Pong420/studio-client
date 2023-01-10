@@ -3,6 +3,7 @@ import cx from 'classnames';
 import { getSectorPoints } from '@/utils/sector';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
 import classes from './Main.module.scss';
+import { Button } from '../Button';
 
 export interface MainProps {
   top?: React.ReactNode;
@@ -43,9 +44,9 @@ export function Main({ assetsCtx, top, bottom, aligment, background, buttons }: 
       {isDevelopment && (
         <div className={classes.buttons}>
           {buttons?.map(({ text, ...props }) => (
-            <button key={text} {...props}>
+            <Button key={text} {...props}>
               {text}
-            </button>
+            </Button>
           ))}
         </div>
       )}
