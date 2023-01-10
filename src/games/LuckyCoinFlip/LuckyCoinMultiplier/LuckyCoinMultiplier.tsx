@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import _classes from './LuckyCoinMultiplier.module.scss';
 
 export interface MultiplierProps extends React.ComponentProps<'div'> {
@@ -10,7 +11,7 @@ export function LuckyCoinMultiplier({ value, color, className = '', classes = {}
   const getImage = (n: string) => require(`../assets/text_coin_${color}/txt_${color}_coin_${n}.png`);
 
   return (
-    <div {...props} className={`${_classes.root} ${className}`.trim()}>
+    <div {...props} className={cx(_classes.root, className)}>
       <div className={classes.symbol}>
         <img src={getImage('x')} alt="" />
       </div>

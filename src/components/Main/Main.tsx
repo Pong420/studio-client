@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import { getSectorPoints } from '@/utils/sector';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
 import classes from './Main.module.scss';
@@ -31,17 +32,7 @@ export function Main({ assetsCtx, top, bottom, aligment, background, buttons }: 
 
   return (
     <div className={classes.root}>
-      <div
-        className={[
-          //
-          classes.main,
-          aligment && isDevelopment && classes.aligment,
-          background && isDevelopment && classes.background
-        ]
-          .filter(Boolean)
-          .join(' ')
-          .trim()}
-      >
+      <div className={cx(classes.main, { [classes.aligment]: aligment, [classes.background]: background })}>
         <div className={classes.sector} style={sectorStyles}>
           <div className={classes.ring} />
           <div className={classes.top}>{top}</div>
