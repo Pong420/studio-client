@@ -24,7 +24,7 @@ const sectorStyles: React.CSSProperties = {
   clipPath: `polygon(${getSectorPoints(ExtensionAngle)})`
 };
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const control = process.env.REACT_APP_CONTROL === 'true';
 
 export function Layout({ assetsCtx, top, bottom, aligment, background, buttons = [] }: LayoutProps) {
   const preload = usePreloadAssets(assetsCtx);
@@ -45,13 +45,13 @@ export function Layout({ assetsCtx, top, bottom, aligment, background, buttons =
         </div>
         <div className={classes.bottom}>{bottom}</div>
       </div>
-      {isDevelopment && (
+      {control && (
         <div className={classes.navbar}>
           <div className={classes.head}>
             <div className={classes.back}>
               {location.pathname !== '/' && (
                 <svg height="1em" width="1em" viewBox="0 0 48 48" onClick={() => router.navigate('/')}>
-                  <path fill="#000" d="M28.05 36 16 23.95 28.05 11.9l2.15 2.15-9.9 9.9 9.9 9.9Z" />
+                  <path fill="currentColor" d="M28.05 36 16 23.95 28.05 11.9l2.15 2.15-9.9 9.9 9.9 9.9Z" />
                 </svg>
               )}
             </div>
