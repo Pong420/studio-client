@@ -12,13 +12,50 @@ $dimBackground: rgba(0, 0, 0, 0.2);
   gap: 20px;
 }
 
-.buttons {
+.navbar {
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-width: 180px;
   height: 100%;
   max-height: 768px;
+
+  .head {
+    $back: 2em;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .back {
+      &:empty {
+        width: $back;
+        height: $back;
+      }
+
+      svg {
+        width: $back;
+        height: $back;
+        cursor: pointer;
+      }
+    }
+
+    &:after {
+      content: '';
+      width: $back;
+    }
+  }
+
+  .title {
+    text-align: center;
+    font-weight: bold;
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .main {

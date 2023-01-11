@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
-import { routes } from '@/routes';
+import { router, routes } from '@/routes';
+import { Layout, LayoutProps } from '@/components/Layout';
 
 export const getComponentName = (element: ReactNode | null) => {
   if (element && typeof element === 'object' && 'type' in element) {
@@ -12,14 +12,13 @@ export const getComponentName = (element: ReactNode | null) => {
 
 export function Entry() {
   return (
-    <ul>
-      {routes[0].children?.map(r =>
-        r.path === '/' ? null : (
-          <li key={r.path}>
-            <Link to={r.path || '/'}>{getComponentName(r.element) || r.path}</Link>
-          </li>
-        )
-      )}
-    </ul>
+    <Layout
+      buttons={routes[0].children?.reduce((buttons, r) => {
+        const path = r.path;
+        return path === '/' || !path
+          ? buttons
+          : [...buttons, { text: getComponentName(r.element) || path, onClick: () => router.navigate(path) }];
+      }, [] as NonNullable<LayoutProps['buttons']>)}
+    />
   );
 }
