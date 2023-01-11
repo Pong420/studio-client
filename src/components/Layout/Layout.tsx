@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cx from 'classnames';
-import { useLocation, useOutletContext } from 'react-router-dom';
+import { useLoaderData, useLocation } from 'react-router-dom';
 import { getSectorPoints } from '@/utils/sector';
 import { router } from '@/routes';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
@@ -29,7 +29,11 @@ const control = process.env.REACT_APP_CONTROL === 'true';
 export function Layout({ assetsCtx, top, bottom, aligment, background, buttons = [] }: LayoutProps) {
   const preload = usePreloadAssets(assetsCtx);
   const location = useLocation();
-  const { title } = useOutletContext<{ title: string }>();
+  const loader = useLoaderData() as { title: string };
+
+  useEffect(() => {
+    document.title = loader.title;
+  }, [loader]);
 
   if (!preload.done) {
     return null;
@@ -55,7 +59,7 @@ export function Layout({ assetsCtx, top, bottom, aligment, background, buttons =
                 </svg>
               )}
             </div>
-            <div className={classes.title}>{title}</div>
+            <div className={classes.title}>{loader.title}</div>
           </div>
           <div className={classes.buttons}>
             {buttons?.map(({ text, ...props }) => (

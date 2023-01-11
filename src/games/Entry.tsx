@@ -13,11 +13,12 @@ export const getComponentName = (element: ReactNode | null) => {
 export function Entry() {
   return (
     <Layout
-      buttons={routes[0].children?.reduce((buttons, r) => {
+      buttons={routes.reduce((buttons, r) => {
         const path = r.path;
+        const loader = r.loader as any;
         return path === '/' || !path
           ? buttons
-          : [...buttons, { text: getComponentName(r.element) || path, onClick: () => router.navigate(path) }];
+          : [...buttons, { text: loader?.()?.title || path, onClick: () => router.navigate(path) }];
       }, [] as NonNullable<LayoutProps['buttons']>)}
     />
   );
