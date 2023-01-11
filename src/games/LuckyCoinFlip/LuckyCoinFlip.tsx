@@ -1,36 +1,20 @@
-import { useState, useRef, ReactNode } from 'react';
-import { Main } from '@/components/Main';
+import { useState, useRef } from 'react';
+import { Main, MainProps } from '@/components/Main';
 import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
 import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
 import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
+import { LuckyCoinRing } from './LuckyCoinRing';
 
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 
-const coins: LuckyCoinProps[] = [
-  { color: 'red', value: '2' },
-  { color: 'red', value: '4' },
-  { color: 'red', value: '8' },
-  { color: 'red', value: '16' },
-  { color: 'red', value: '26' },
-  { color: 'red', value: '32' },
-  { color: 'red', value: '44' },
-  { color: 'red', value: '144' },
-  { color: 'red', value: '168' },
-  { color: 'red', value: '200' },
-  { color: 'blue', value: '3' },
-  { color: 'blue', value: '17' },
-  { color: 'blue', value: '25' },
-  { color: 'blue', value: '39' },
-  { color: 'blue', value: '41' },
-  { color: 'blue', value: '55' },
-  { color: 'blue', value: '79' },
-  { color: 'blue', value: '163' },
-  { color: 'blue', value: '175' },
-  { color: 'blue', value: '199' }
-];
+const coins = ['red', 'blue', 'gold'].flatMap((v, i) =>
+  [1, 4, 16, 32, 100].map<LuckyCoinProps>(m => {
+    return { variant: v as LuckyCoinProps['variant'], value: '' + m * (i + 1) };
+  })
+);
 
-const Coin = (
+const Coins = (
   <div
     style={{
       display: 'grid',
@@ -49,35 +33,77 @@ const Coin = (
   </div>
 );
 
-const CountDown = <LuckyCoinCountDown />;
+enum Stage {
+  Marquee,
+  CountDown,
+  Result,
+  Coins
+}
 
-const Result = <LuckyCoinFlipResult value="17" color="blue" />;
+const stages = Object.values(Stage).filter((s): s is Stage => typeof s === 'number');
+const getNextStage = (stage: Stage) => {
+  const idx = stages.indexOf(stage);
+  return stages[idx === stages.length - 1 ? 0 : idx + 1];
+};
 
 export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
+  const [key, setKey] = useState(0);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
-  const [Marquee] = useState(<LuckyCoinMarquee multipliers={multipliers} ref={marquee} />);
-  const [bottom, setBottom] = useState<ReactNode>(Marquee);
+  const [stage, setStage] = useState(Stage.Marquee);
+
+  const getProps = (): Partial<MainProps> => {
+    if (stage === Stage.Marquee) {
+      return {
+        top: <LuckyCoinRing variant="readytoplay" />,
+        bottom: <LuckyCoinMarquee multipliers={multipliers} ref={marquee} />,
+        buttons: [
+          { text: 'Start (Constant Speed)', onClick: () => marquee.current?.enter() },
+          { text: 'Loop (Acceleration)', onClick: () => marquee.current?.start() },
+          { text: 'Stop (Deceleration)', onClick: () => marquee.current?.stop(0) }
+        ]
+      };
+    }
+
+    if (stage === Stage.CountDown) {
+      return {
+        top: <LuckyCoinRing variant="timetoflip" />,
+        bottom: <LuckyCoinCountDown key={key} />,
+        buttons: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
+      };
+    }
+
+    if (stage === Stage.Result) {
+      return {
+        top: <LuckyCoinRing variant="timetoflip" />,
+        bottom: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
+        buttons: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
+      };
+    }
+
+    if (stage === Stage.Coins) {
+      return {
+        bottom: Coins
+      };
+    }
+
+    return {};
+  };
+
+  const props = getProps();
+  const nextStage = getNextStage(stage);
 
   return (
     <Main
       background
       assetsCtx={assetsCtx}
-      bottom={bottom}
+      {...props}
       buttons={[
         {
-          text: 'toggle',
-          onClick: () => {
-            setBottom(b => {
-              const list: any[] = [Marquee, Coin, CountDown, Result];
-              const idx = list.findIndex(l => l === b);
-              return list[idx === list.length - 1 ? 0 : idx + 1];
-            });
-          }
+          text: `Next (${Stage[nextStage]})`,
+          onClick: () => setStage(nextStage)
         },
-        { text: 'marquee.enter', onClick: () => marquee.current?.enter() },
-        { text: 'marquee.start', onClick: () => marquee.current?.start() },
-        { text: 'marquee.stop', onClick: () => marquee.current?.stop(0) }
+        ...(props.buttons || [])
       ]}
     />
   );

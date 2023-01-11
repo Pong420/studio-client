@@ -1,6 +1,5 @@
 import { Ref, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { animated, to, useSpringValue } from '@react-spring/web';
-import { MotionBlur } from '@/components/MotionBlur';
 import { Logger } from '@/utils/logger';
 import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import classes from './LuckyCoinMarquee.module.scss';
@@ -71,7 +70,7 @@ function LuckyCoinMarqueeComponent(
         const { from = translate.get(), to = twoThirdWidth * direction, repeat = -1, acceleration = 0 } = option;
         const duration = (Math.abs(to) - Math.abs(from)) / velocity;
 
-        setBlur(velocity >= MaxVelocity / 2);
+        setBlur(velocity >= MaxVelocity * 0.2);
 
         translate.start({
           from,
@@ -124,7 +123,7 @@ function LuckyCoinMarqueeComponent(
 
         const to = -anchor.offsetLeft - getVisibleWidth() / 2 - anchor.offsetWidth / 2;
 
-        const velocity = await stop({ velocity: MaxVelocity, repeat: 2, acceleration: -Acceleration });
+        const velocity = await stop({ velocity: MaxVelocity, repeat: 3, acceleration: -Acceleration });
 
         setBlur(false);
 
@@ -146,16 +145,16 @@ function LuckyCoinMarqueeComponent(
       ref={marqueeRef}
     >
       {multipliers.map((m, i) => {
-        const node = (
+        return (
           <LuckyCoinMultiplier
             key={i}
-            color="red"
+            variant="plain"
+            blur={blur}
             className={classes.multiplier}
             value={m.toString()}
             classes={classes}
           />
         );
-        return blur ? <MotionBlur key={i}>{node}</MotionBlur> : node;
       })}
     </animated.div>
   );

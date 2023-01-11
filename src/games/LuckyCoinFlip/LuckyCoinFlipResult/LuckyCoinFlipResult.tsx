@@ -5,10 +5,10 @@ import { useEffect } from 'react';
 
 export interface LuckyCoinFlipResultProps {
   value: string;
-  color: 'red' | 'blue';
+  variant: 'red' | 'blue' | 'gold';
 }
 
-export function LuckyCoinFlipResult({ value, color }: LuckyCoinFlipResultProps) {
+export function LuckyCoinFlipResult({ value, variant }: LuckyCoinFlipResultProps) {
   const scale = useSpringValue(0, { config: config.slow });
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export function LuckyCoinFlipResult({ value, color }: LuckyCoinFlipResultProps) 
         className={classes.coin}
         style={{ scale, opacity: scale, boxShadow: to(scale, n => `0px 0px ${n * 30}px ${shadowColor}`) }}
       >
-        <LuckyCoin value={value} color={color} />
+        <LuckyCoin value={value} variant={variant} />
       </animated.div>
     </div>
   );

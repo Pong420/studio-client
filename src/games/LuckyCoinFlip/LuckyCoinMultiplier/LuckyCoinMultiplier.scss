@@ -2,28 +2,32 @@
   flex: 0 0 auto;
 }
 
+.blur {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 @mixin scale($size) {
   height: $size;
 
   .symbol {
-    width: calc($size / 2);
+    position: relative;
+    height: 80%;
     align-self: flex-end;
-
-    img {
-      width: 100%;
-      height: auto;
-    }
   }
 
   .number {
+    position: relative;
     height: 100%;
 
     + .number {
       margin-left: $size * 0.1;
     }
+  }
 
-    img {
-      height: 100%;
-    }
+  img {
+    height: 100%;
   }
 }
