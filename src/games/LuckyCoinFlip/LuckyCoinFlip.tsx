@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Main, MainProps } from '@/components/Main';
+import { Layout, LayoutProps } from '@/components/Layout';
 import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
 import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
@@ -52,7 +52,7 @@ export function LuckyCoinFlip() {
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
   const [stage, setStage] = useState(Stage.Marquee);
 
-  const getProps = (): Partial<MainProps> => {
+  const getProps = (): Partial<LayoutProps> => {
     if (stage === Stage.Marquee) {
       return {
         top: <LuckyCoinRing variant="readytoplay" />,
@@ -94,7 +94,7 @@ export function LuckyCoinFlip() {
   const nextStage = getNextStage(stage);
 
   return (
-    <Main
+    <Layout
       background
       assetsCtx={assetsCtx}
       {...props}

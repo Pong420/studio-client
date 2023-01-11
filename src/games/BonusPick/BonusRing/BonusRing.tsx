@@ -1,8 +1,8 @@
 import { Ref, forwardRef, useImperativeHandle, useState } from 'react';
 import { animated, useSpringValue } from '@react-spring/web';
 import { Circle, CircleItem } from '@/components/Circle';
+import { ExtensionAngle } from '@/components/Layout';
 import classes from './BonusRing.module.scss';
-import { ExtensionAngle } from '@/components/Main';
 
 export interface BonusRingProps {}
 

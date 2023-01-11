@@ -2,11 +2,11 @@ import React from 'react';
 import cx from 'classnames';
 import { getSectorPoints } from '@/utils/sector';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
-import classes from './Main.module.scss';
+import classes from './Layout.module.scss';
 import { Button } from '../Button';
 import { router } from '@/routes';
 
-export interface MainProps {
+export interface LayoutProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
   assetsCtx?: __WebpackModuleApi.RequireContext;
@@ -25,7 +25,7 @@ const sectorStyles: React.CSSProperties = {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-export function Main({ assetsCtx, top, bottom, aligment, background, buttons = [] }: MainProps) {
+export function Layout({ assetsCtx, top, bottom, aligment, background, buttons = [] }: LayoutProps) {
   const preload = usePreloadAssets(assetsCtx);
 
   if (!preload.done) {

@@ -83,13 +83,13 @@ This feature controlled in `app.config.js` which is an option of [sass-loder](ht
 
 ### Preload Images
 
-Define the assets context and assgin to the `Main` Component
+Define the assets context and assgin to the `Layout` Component
 
 ```tsx
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 
 export function LuckyCoinFlip() {
-  return <Main background assetsCtx={assetsCtx} />;
+  return <Layout background assetsCtx={assetsCtx} />;
 }
 ```
 

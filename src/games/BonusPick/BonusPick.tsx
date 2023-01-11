@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Main } from '@/components/Main';
+import { Layout } from '@/components/Layout';
 import { BonusRing, BonusRingController } from './BonusRing';
 import { BonusCircle, BonusCircleController } from './BonusCircle';
 
@@ -13,7 +13,7 @@ export function BonusPick() {
   const circleRef = useRef<BonusCircleController>(null);
 
   return (
-    <Main
+    <Layout
       // aligment
       background
       top={<BonusRing ref={ringRef} />}
