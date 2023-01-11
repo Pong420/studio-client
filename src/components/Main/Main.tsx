@@ -4,6 +4,7 @@ import { getSectorPoints } from '@/utils/sector';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
 import classes from './Main.module.scss';
 import { Button } from '../Button';
+import { router } from '@/routes';
 
 export interface MainProps {
   top?: React.ReactNode;
@@ -24,7 +25,7 @@ const sectorStyles: React.CSSProperties = {
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-export function Main({ assetsCtx, top, bottom, aligment, background, buttons }: MainProps) {
+export function Main({ assetsCtx, top, bottom, aligment, background, buttons = [] }: MainProps) {
   const preload = usePreloadAssets(assetsCtx);
 
   if (!preload.done) {
@@ -43,7 +44,13 @@ export function Main({ assetsCtx, top, bottom, aligment, background, buttons }: 
       </div>
       {isDevelopment && (
         <div className={classes.buttons}>
-          {buttons?.map(({ text, ...props }) => (
+          {[
+            {
+              text: 'Go Back',
+              onClick: () => router.navigate('/')
+            },
+            ...buttons
+          ]?.map(({ text, ...props }) => (
             <Button key={text} {...props}>
               {text}
             </Button>

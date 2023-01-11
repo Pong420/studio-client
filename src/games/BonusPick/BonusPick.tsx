@@ -19,11 +19,11 @@ export function BonusPick() {
       top={<BonusRing ref={ringRef} />}
       bottom={<BonusCircle ref={circleRef} />}
       buttons={[
-        { text: 'ring.start', onClick: () => ringRef.current?.start(multipliers) },
-        { text: 'ring.rotate', onClick: () => ringRef.current?.rotate() },
-        { text: 'ring.end', onClick: () => ringRef.current?.end() },
-        { text: 'circle.start', onClick: () => circleRef.current?.start(multipliers) },
-        { text: 'circle.rotate', onClick: () => circleRef.current?.rotate() }
+        { text: 'Ring Show', onClick: () => ringRef.current?.start(multipliers) },
+        { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
+        { text: 'Ring Hide', onClick: () => ringRef.current?.end() },
+        { text: 'Circle Start', onClick: () => circleRef.current?.start(multipliers) },
+        { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() }
       ]}
     />
   );
