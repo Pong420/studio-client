@@ -2,6 +2,7 @@
   "name": "studio-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "REACT_APP_CONTROL=false react-scripts build",
