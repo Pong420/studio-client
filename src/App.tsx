@@ -5,7 +5,7 @@ import { DataSocketProvider } from './hooks/useDataSocket';
 function App() {
   return (
     <DataSocketProvider>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </DataSocketProvider>
   );
 }
