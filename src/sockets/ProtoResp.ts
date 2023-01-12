@@ -9,6 +9,11 @@ export interface IProtoResp<T> extends ResponseBase {
 export class ProtoRespBase<T = any> extends ResponseBase {
   override respId: number;
   payload: T;
+
+  constructor(respId: number, bytes: ByteArray) {
+    super(respId, bytes);
+    this.respId = respId;
+  }
 }
 
 export function ProtoResp<T>(msg: ProtoMessage<T>) {

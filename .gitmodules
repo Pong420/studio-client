@@ -1,0 +1,3 @@
+[submodule "live_protocol_dealer"]
+	path = live_protocol_dealer
+	url = https://code-dev/live_game_server/live_protocol_dealer

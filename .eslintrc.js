@@ -33,6 +33,5 @@ module.exports = {
     react: {
       version: 'detect'
     }
-  },
-  ignorePatterns: []
+  }
 };

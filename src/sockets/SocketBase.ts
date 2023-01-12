@@ -1,10 +1,9 @@
-import { SocketEmitter, Event, ResponseBase, ProtoMessage } from '@ct/socket-emitter';
+import { Event, ResponseBase, ProtoMessage } from '@ct/socket-emitter';
 import { Constructable } from '@/types';
 import { Logger } from '@/utils/logger';
 import { ProtoResp, ProtoRespBase } from './ProtoResp';
-
-// TODO:
-const Protocol = {} as Record<string, any>;
+import { SocketEmitter, SocketEmitterOptions } from './SocketEmitter';
+import { Protocol } from './protocol';
 
 export type ResponseModel = Constructable<ResponseBase> | ProtoMessage<any> | Constructable<ProtoRespBase<any>>;
 export type ParseResponseBase<R extends ResponseModel> = R extends Constructable<ResponseBase>
@@ -44,14 +43,16 @@ export abstract class SocketBase extends SocketEmitter {
   protected retry = 5;
   private retryRef = 0;
 
-  constructor() {
-    super();
+  constructor(option?: SocketEmitterOptions) {
+    super(option);
     this.on(Event.OPEN, this.onOpen, this);
     this.on(Event.OPEN, this.onConnected, this);
     this.on(Event.PACKET, this.onData, this);
     this.on(Event.ERROR, this.onError, this);
-    this.on(Event.CLOSE, this.onError, this);
+    this.on(Event.CLOSE, this.onClose, this);
+
     this.retryRef = this.retry;
+    this.logger = Logger.create(this.constructor.name);
   }
 
   protected abstract onOpen(): void;
@@ -111,6 +112,7 @@ export abstract class SocketBase extends SocketEmitter {
 
   destroy() {
     this.removeAllListeners();
-    this.isOpen && this.kill();
+    this.disconnect();
+    this.kill();
   }
 }
