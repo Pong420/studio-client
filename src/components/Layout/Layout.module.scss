@@ -1,4 +1,4 @@
-$dimBackground: rgba(0, 0, 0, 0.2);
+$dimBackground: rgba(0, 0, 0, 0.1);
 
 .root {
   position: absolute;
@@ -62,94 +62,20 @@ $dimBackground: rgba(0, 0, 0, 0.2);
   position: relative;
   width: 576px;
   height: 768px;
-
   overflow: hidden;
-
   @include shadow-border(0, 0, 0px, 1px);
 
-  &.aligment {
-    background-image: url(../../assets/background.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-
-    $background: rgba(255, 255, 255, 0.5);
-
-    .sector {
-      background-color: $background;
-      .border {
-        border-color: $background;
-      }
-
-      .top *,
-      .blocker {
-        display: none;
-      }
-    }
-
-    .bottom {
-      background-color: $background;
-
-      * {
-        display: none;
-      }
-    }
-  }
-
   &.background {
-    .ring {
-      border-color: $dimBackground;
-    }
-    .bottom {
-      background-color: $dimBackground;
-    }
+    background-color: #ccc;
   }
 }
 
-.sector {
-  $borderWidth: 76px;
-
+.top {
   position: absolute;
   top: 4.1%;
-  left: 50%;
-  transform: translateX(-50%);
-  overflow: hidden;
-  border-radius: 50%;
 
-  $size: 145%;
-  width: $size;
-  height: 0;
-  padding-bottom: $size;
-
-  .ring {
-    position: absolute;
-
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-
-    border: $borderWidth solid transparent;
-  }
-
-  .top {
-    position: absolute;
-
-    width: 100%;
-    height: 17%;
-  }
-
-  .blocker {
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-
-    $size: 80%;
-    width: $size;
-    height: $size;
-    border-radius: 50%;
-
-    background-color: #fff;
-  }
+  width: 100%;
+  height: 17%;
 }
 
 .bottom {

@@ -22,6 +22,7 @@
     "@esotericsoftware/spine-player": "^4.2.10",
     "@esotericsoftware/spine-webgl": "^4.2.10",
     "@react-spring/web": "^9.6.1",
+    "dom-to-image": "^2.6.0",
     "md5": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,6 +31,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@types/dom-to-image": "^2.6.4",
     "@types/md5": "^2.3.2",
     "@types/node": "^16.18.9",
     "@types/react": "^18.0.26",

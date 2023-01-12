@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import cx from 'classnames';
+import { useEffect } from 'react';
 import { useLoaderData, useLocation } from 'react-router-dom';
-import { getSectorPoints } from '@/utils/sector';
 import { router } from '@/routes';
 import { usePreloadAssets } from '@/hooks/usePreloadAssets';
 import { Button } from '@/components/Button';
+import { Mask } from '@/components/Mask';
 import classes from './Layout.module.scss';
+import cx from 'classnames';
 
 export interface LayoutProps {
   top?: React.ReactNode;
@@ -20,13 +20,9 @@ export interface LayoutProps {
 
 export const ExtensionAngle = 75;
 
-const sectorStyles: React.CSSProperties = {
-  clipPath: `polygon(${getSectorPoints(ExtensionAngle)})`
-};
-
 const control = process.env.REACT_APP_CONTROL === 'true';
 
-export function Layout({ assetsCtx, top, bottom, aligment, background, buttons = [] }: LayoutProps) {
+export function Layout({ assetsCtx, top, bottom, background, buttons = [] }: LayoutProps) {
   const preload = usePreloadAssets(assetsCtx);
   const location = useLocation();
   const loader = useLoaderData() as { title: string };
@@ -41,13 +37,10 @@ export function Layout({ assetsCtx, top, bottom, aligment, background, buttons =
 
   return (
     <div className={classes.root}>
-      <div className={cx(classes.main, { [classes.aligment]: aligment, [classes.background]: background })}>
-        <div className={classes.sector} style={sectorStyles}>
-          <div className={classes.ring} />
-          <div className={classes.top}>{top}</div>
-          <div className={classes.blocker} />
-        </div>
+      <div className={cx(classes.main, { [classes.background]: background })}>
+        <div className={classes.top}>{top}</div>
         <div className={classes.bottom}>{bottom}</div>
+        <Mask />
       </div>
       {control && (
         <div className={classes.navbar}>

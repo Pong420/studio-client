@@ -13,6 +13,7 @@ export const getComponentName = (element: ReactNode | null) => {
 export function Entry() {
   return (
     <Layout
+      background
       buttons={routes.reduce((buttons, r) => {
         const path = r.path;
         const loader = r.loader as any;
