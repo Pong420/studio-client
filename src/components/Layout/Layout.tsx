@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { Mask } from '@/components/Mask';
 import classes from './Layout.module.scss';
 import cx from 'classnames';
+import { StepOption } from '@/hooks/useSteps';
 
 export type LayoutAction = React.ComponentProps<'button'> & { text: string };
 
@@ -14,7 +15,7 @@ export interface LayoutProps {
   /* props for development */
   aligment?: boolean;
   background?: boolean;
-  steps?: { onChange: (value: any) => unknown; selected?: any; options: { label: string; value: any }[] };
+  steps?: StepOption<any>;
   actions?: LayoutAction[] | { title?: string; options: LayoutAction[] };
 }
 

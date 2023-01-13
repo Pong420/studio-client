@@ -1,31 +1,24 @@
 import { useState, useRef } from 'react';
 import { Layout, LayoutProps } from '@/components/Layout';
+import { createUseSteps } from '@/hooks/useSteps';
 import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
-import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
 import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
+import { LuckyCoinDisplay } from './LuckyCoinDisplay';
 
-const coins = ['red', 'blue', 'gold'].flatMap((v, i) =>
-  [1, 4, 16, 32, 100].map<LuckyCoinProps>(m => {
-    return { variant: v as LuckyCoinProps['variant'], value: '' + m * (i + 1) };
-  })
-);
-
-enum Stage {
-  Marquee,
-  CountDown,
-  Result,
-  Coins
-}
+const useSteps = createUseSteps(['Marquee', 'CountDown', 'Result', 'Coins'], {
+  path: '/lucky-coin-flip/:step?',
+  defaultValue: 'Marquee'
+});
 
 export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
   const [key, setKey] = useState(0);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
-  const [stage, setStage] = useState(Stage.CountDown);
+  const { steps, step, options, onChange } = useSteps();
 
   const getProps = (): Partial<LayoutProps> => {
-    if (stage === Stage.Marquee) {
+    if (step === steps.Marquee) {
       return {
         children: <LuckyCoinMarquee multipliers={multipliers} ref={marquee} />,
         actions: [
@@ -36,42 +29,23 @@ export function LuckyCoinFlip() {
       };
     }
 
-    if (stage === Stage.CountDown) {
+    if (step === steps.CountDown) {
       return {
         children: <LuckyCoinCountDown key={key} />,
         actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
-    if (stage === Stage.Result) {
+    if (step === steps.Result) {
       return {
         children: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
         actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
-    if (stage === Stage.Coins) {
+    if (step === steps.Coins) {
       return {
-        children: (
-          <Layout.Circle>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(5, auto)`,
-                alignItems: 'center',
-                position: 'absolute',
-                top: '50%',
-                transform: 'translateY(-50%)',
-                padding: `10%`,
-                gap: `10px`
-              }}
-            >
-              {coins.map((p, i) => (
-                <LuckyCoin key={i} {...p} />
-              ))}
-            </div>
-          </Layout.Circle>
-        )
+        children: <LuckyCoinDisplay />
       };
     }
 
@@ -85,14 +59,9 @@ export function LuckyCoinFlip() {
       background
       {...props}
       steps={{
-        options: [
-          { label: 'Marquee', value: Stage.Marquee },
-          { label: 'CountDown', value: Stage.CountDown },
-          { label: 'Result', value: Stage.Result },
-          { label: 'Coins', value: Stage.Coins }
-        ],
-        selected: stage,
-        onChange: setStage
+        options,
+        onChange,
+        selected: step
       }}
     />
   );

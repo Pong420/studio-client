@@ -13,7 +13,10 @@ export function Entry() {
           const loader = r.loader as any;
           return path === '/' || !path
             ? actions
-            : [...actions, { text: loader?.()?.title || path, onClick: () => router.navigate(path) }];
+            : [
+                ...actions,
+                { text: loader?.()?.title || path, onClick: () => router.navigate(path.replace(/(\/\*|:.*)$/, '')) }
+              ];
         }, [] as LayoutAction[])
       }}
     />
