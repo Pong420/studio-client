@@ -14,8 +14,8 @@ $ringWidth: 76px;
 
 .main {
   position: relative;
-  width: 576px;
-  height: 768px;
+  width: $screenWidth;
+  height: $screenHeight;
   overflow: hidden;
 
   &.aligment {

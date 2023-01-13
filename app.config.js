@@ -1,6 +1,6 @@
 const sassPresets =
   `
-@use 'src/styles/scss/variables' as vars;
+@use 'src/styles/scss/variables' as *;
 @use 'src/styles/scss/index.scss' as *;
 `
     .trim()

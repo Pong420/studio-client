@@ -75,9 +75,10 @@ $dimBackground: rgba(0, 0, 0, 0.1);
 
 .main {
   position: relative;
-  width: 576px;
-  height: 768px;
+  width: $screenWidth;
+  height: $screenHeight;
   overflow: hidden;
+  flex: 0 0 auto;
   @include shadow-border(0, 0, 0px, 1px);
 
   &.background {
