@@ -18,7 +18,7 @@ export function LuckyCoinMultiplier({ value, variant, className = '', classes = 
         : variant === 'gold'
         ? `text_coin_winner/txt_winner_coin_${n}.png`
         : `text_coin_${variant}/txt_${variant}_coin_${n}.png`;
-    return require(`../assets/${image}`);
+    return require(`@/assets/${image}`);
   };
 
   const blurImage = (n: string) =>

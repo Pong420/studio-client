@@ -8,19 +8,23 @@ import { LuckyCoinFlip } from './games/LuckyCoinFlip';
  */
 export const routes: RouteObject[] = [
   {
-    path: '/',
-    loader: () => ({ title: 'Home' }),
-    element: <Entry />
-  },
-  {
-    path: '/bonus-pick',
-    loader: () => ({ title: 'Bonus Pick' }),
-    element: <BonusPick />
-  },
-  {
-    path: '/lucky-coin-flip',
-    loader: () => ({ title: 'Luck Coin Flip' }),
-    element: <LuckyCoinFlip />
+    children: [
+      {
+        path: '/',
+        loader: () => ({ title: 'Home' }),
+        element: <Entry />
+      },
+      {
+        path: '/bonus-pick',
+        loader: () => ({ title: 'Bonus Pick' }),
+        element: <BonusPick />
+      },
+      {
+        path: '/lucky-coin-flip',
+        loader: () => ({ title: 'Luck Coin Flip' }),
+        element: <LuckyCoinFlip />
+      }
+    ]
   }
 ];
 

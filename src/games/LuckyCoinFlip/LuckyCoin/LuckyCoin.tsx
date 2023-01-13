@@ -15,7 +15,7 @@ export function LuckyCoin({ value, variant, glow, className = '', ...divProps }:
 
   return (
     <div {...divProps} className={cx(classes.root, glow && classes.glow, className)}>
-      <img src={require(`../assets/${backgroundImage}.png`)} alt="" />
+      <img src={require(`@/assets/${backgroundImage}.png`)} alt="" />
       <div className={classes.multiplier}>
         <LuckyCoinMultiplier
           value={value}

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { router } from '@/routes';
-import { usePreloadAssets } from '@/hooks/usePreloadAssets';
 import { Button } from '@/components/Button';
 import { Mask } from '@/components/Mask';
 import classes from './Layout.module.scss';
@@ -10,7 +9,6 @@ import cx from 'classnames';
 export interface LayoutProps {
   top?: React.ReactNode;
   bottom?: React.ReactNode;
-  assetsCtx?: __WebpackModuleApi.RequireContext;
 
   /* props for development */
   aligment?: boolean;
@@ -22,18 +20,13 @@ export const ExtensionAngle = 75;
 
 const control = process.env.REACT_APP_CONTROL === 'true';
 
-export function Layout({ assetsCtx, top, bottom, background, buttons = [] }: LayoutProps) {
-  const preload = usePreloadAssets(assetsCtx);
+export function Layout({ top, bottom, background, buttons = [] }: LayoutProps) {
   const location = useLocation();
   const loader = useLoaderData() as { title: string };
 
   useEffect(() => {
     document.title = loader.title;
   }, [loader]);
-
-  if (!preload.done) {
-    return null;
-  }
 
   return (
     <div className={classes.root}>

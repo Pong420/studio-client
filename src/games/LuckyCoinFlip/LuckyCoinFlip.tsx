@@ -6,8 +6,6 @@ import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
 import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
 import { LuckyCoinRing } from './LuckyCoinRing';
 
-const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
-
 const coins = ['red', 'blue', 'gold'].flatMap((v, i) =>
   [1, 4, 16, 32, 100].map<LuckyCoinProps>(m => {
     return { variant: v as LuckyCoinProps['variant'], value: '' + m * (i + 1) };
@@ -96,7 +94,6 @@ export function LuckyCoinFlip() {
   return (
     <Layout
       background
-      assetsCtx={assetsCtx}
       {...props}
       buttons={[
         {

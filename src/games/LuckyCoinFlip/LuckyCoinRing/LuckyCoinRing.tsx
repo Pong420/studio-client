@@ -13,7 +13,7 @@ export function LuckyCoinRing({ variant }: LuckyCoinRingProps) {
   return (
     <img
       className={classes.root}
-      src={require(`../assets/banner_${variant}.png`)}
+      src={require(`@/assets/banner_${variant}.png`)}
       style={{ height: heights[variant] }}
       alt=""
     />
