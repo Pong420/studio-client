@@ -3,6 +3,8 @@ import { animated, to, useSpringValue } from '@react-spring/web';
 import { Logger } from '@/utils/logger';
 import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import classes from './LuckyCoinMarquee.module.scss';
+import { Layout } from '@/components/Layout';
+import { LuckyCoinRing } from '../LuckyCoinRing';
 
 export interface LuckyCoinMarqueeProps {
   multipliers: number[];
@@ -139,24 +141,32 @@ function LuckyCoinMarqueeComponent(
   });
 
   return (
-    <animated.div
-      className={classes.root}
-      style={{ transform: to(translate, x => `translate(${x}px, -50%)`) }}
-      ref={marqueeRef}
-    >
-      {multipliers.map((m, i) => {
-        return (
-          <LuckyCoinMultiplier
-            key={i}
-            variant="plain"
-            blur={blur}
-            className={classes.multiplier}
-            value={m.toString()}
-            classes={classes}
-          />
-        );
-      })}
-    </animated.div>
+    <>
+      <Layout.Ring>
+        <LuckyCoinRing variant="readytoplay" />
+      </Layout.Ring>
+
+      <Layout.Circle>
+        <animated.div
+          className={classes.root}
+          style={{ transform: to(translate, x => `translate(${x}px, -50%)`) }}
+          ref={marqueeRef}
+        >
+          {multipliers.map((m, i) => {
+            return (
+              <LuckyCoinMultiplier
+                key={i}
+                variant="plain"
+                blur={blur}
+                className={classes.multiplier}
+                value={m.toString()}
+                classes={classes}
+              />
+            );
+          })}
+        </animated.div>
+      </Layout.Circle>
+    </>
   );
 }
 

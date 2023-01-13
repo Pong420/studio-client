@@ -4,31 +4,11 @@ import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
 import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
 import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
-import { LuckyCoinRing } from './LuckyCoinRing';
 
 const coins = ['red', 'blue', 'gold'].flatMap((v, i) =>
   [1, 4, 16, 32, 100].map<LuckyCoinProps>(m => {
     return { variant: v as LuckyCoinProps['variant'], value: '' + m * (i + 1) };
   })
-);
-
-const Coins = (
-  <div
-    style={{
-      display: 'grid',
-      gridTemplateColumns: `repeat(5, auto)`,
-      alignItems: 'center',
-      position: 'absolute',
-      top: '50%',
-      transform: 'translateY(-50%)',
-      padding: `10%`,
-      gap: `10px`
-    }}
-  >
-    {coins.map((p, i) => (
-      <LuckyCoin key={i} {...p} />
-    ))}
-  </div>
 );
 
 enum Stage {
@@ -42,13 +22,12 @@ export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
   const [key, setKey] = useState(0);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
-  const [stage, setStage] = useState(Stage.Marquee);
+  const [stage, setStage] = useState(Stage.CountDown);
 
   const getProps = (): Partial<LayoutProps> => {
     if (stage === Stage.Marquee) {
       return {
-        top: <LuckyCoinRing variant="readytoplay" />,
-        bottom: <LuckyCoinMarquee multipliers={multipliers} ref={marquee} />,
+        children: <LuckyCoinMarquee multipliers={multipliers} ref={marquee} />,
         actions: [
           { text: 'Start (Constant Speed)', onClick: () => marquee.current?.enter() },
           { text: 'Loop (Acceleration)', onClick: () => marquee.current?.start() },
@@ -59,23 +38,40 @@ export function LuckyCoinFlip() {
 
     if (stage === Stage.CountDown) {
       return {
-        top: <LuckyCoinRing variant="timetoflip" />,
-        bottom: <LuckyCoinCountDown key={key} />,
+        children: <LuckyCoinCountDown key={key} />,
         actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
     if (stage === Stage.Result) {
       return {
-        top: <LuckyCoinRing variant="timetoflip" />,
-        bottom: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
+        children: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
         actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
     if (stage === Stage.Coins) {
       return {
-        bottom: Coins
+        children: (
+          <Layout.Circle>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(5, auto)`,
+                alignItems: 'center',
+                position: 'absolute',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                padding: `10%`,
+                gap: `10px`
+              }}
+            >
+              {coins.map((p, i) => (
+                <LuckyCoin key={i} {...p} />
+              ))}
+            </div>
+          </Layout.Circle>
+        )
       };
     }
 

@@ -16,8 +16,6 @@ export function BonusPick() {
     <Layout
       // aligment
       background
-      top={<BonusRing ref={ringRef} />}
-      bottom={<BonusCircle ref={circleRef} />}
       actions={[
         { text: 'Ring Show', onClick: () => ringRef.current?.start(multipliers) },
         { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
@@ -25,6 +23,13 @@ export function BonusPick() {
         { text: 'Circle Start', onClick: () => circleRef.current?.start(multipliers) },
         { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() }
       ]}
-    />
+    >
+      <Layout.Ring>
+        <BonusRing ref={ringRef} />
+      </Layout.Ring>
+      <Layout.Circle>
+        <BonusCircle ref={ringRef} />
+      </Layout.Circle>
+    </Layout>
   );
 }

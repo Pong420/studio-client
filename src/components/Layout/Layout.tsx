@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useLoaderData, useLocation } from 'react-router-dom';
 import { router } from '@/routes';
 import { Button } from '@/components/Button';
@@ -9,8 +9,7 @@ import cx from 'classnames';
 export type LayoutAction = React.ComponentProps<'button'> & { text: string };
 
 export interface LayoutProps {
-  top?: React.ReactNode;
-  bottom?: React.ReactNode;
+  children?: React.ReactNode;
 
   /* props for development */
   aligment?: boolean;
@@ -23,7 +22,7 @@ export const ExtensionAngle = 75;
 
 const control = process.env.REACT_APP_CONTROL === 'true';
 
-export function Layout({ top, bottom, background, actions: _actions, steps }: LayoutProps) {
+export function Layout({ children, background, actions: _actions, steps }: LayoutProps) {
   const location = useLocation();
   const loader = useLoaderData() as { title: string };
   const actions = Array.isArray(_actions) ? { options: _actions } : _actions;
@@ -35,10 +34,10 @@ export function Layout({ top, bottom, background, actions: _actions, steps }: La
   return (
     <div className={classes.root}>
       <div className={cx(classes.main, { [classes.background]: background })}>
-        <div className={classes.top}>{top}</div>
-        <div className={classes.bottom}>{bottom}</div>
+        {children}
         <Mask />
       </div>
+
       {control && (
         <div className={classes.navbar}>
           <div className={classes.head}>
@@ -82,3 +81,11 @@ export function Layout({ top, bottom, background, actions: _actions, steps }: La
     </div>
   );
 }
+
+Layout.Ring = function (props: React.ComponentProps<'div'>) {
+  return <div className={classes.top} {...props} />;
+};
+
+Layout.Circle = function (props: React.ComponentProps<'div'>) {
+  return <div className={classes.bottom} {...props} />;
+};

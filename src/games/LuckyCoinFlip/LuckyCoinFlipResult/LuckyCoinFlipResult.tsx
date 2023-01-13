@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { useSpringValue, animated, to, config } from '@react-spring/web';
+import { Layout } from '@/components/Layout';
 import { LuckyCoin, shadowColor } from '../LuckyCoin/LuckyCoin';
 import classes from './LuckyCoinFlipResult.module.scss';
-import { useEffect } from 'react';
 
 export interface LuckyCoinFlipResultProps {
   value: string;
@@ -16,13 +17,15 @@ export function LuckyCoinFlipResult({ value, variant }: LuckyCoinFlipResultProps
   }, [scale]);
 
   return (
-    <div className={classes.root}>
-      <animated.div
-        className={classes.coin}
-        style={{ scale, opacity: scale, boxShadow: to(scale, n => `0px 0px ${n * 30}px ${shadowColor}`) }}
-      >
-        <LuckyCoin value={value} variant={variant} />
-      </animated.div>
-    </div>
+    <Layout.Circle>
+      <div className={classes.root}>
+        <animated.div
+          className={classes.coin}
+          style={{ scale, opacity: scale, boxShadow: to(scale, n => `0px 0px ${n * 30}px ${shadowColor}`) }}
+        >
+          <LuckyCoin value={value} variant={variant} />
+        </animated.div>
+      </div>
+    </Layout.Circle>
   );
 }
