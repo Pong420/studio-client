@@ -38,7 +38,7 @@ export function LuckyCoinFlip() {
 
     if (step === steps.Result) {
       return {
-        children: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
+        children: <LuckyCoinFlipResult key={key} />,
         actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }

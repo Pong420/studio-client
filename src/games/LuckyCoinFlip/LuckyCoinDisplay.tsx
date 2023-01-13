@@ -1,7 +1,7 @@
 import { Layout } from '@/components/Layout';
 import { LuckyCoin, LuckyCoinProps } from './LuckyCoin/LuckyCoin';
 
-const coins = ['red', 'blue', 'gold'].flatMap((v, i) =>
+const coins = ['red', 'blue', 'result'].flatMap((v, i) =>
   [1, 4, 16, 32, 100].map<LuckyCoinProps>(m => {
     return { variant: v as LuckyCoinProps['variant'], value: '' + m * (i + 1) };
   })

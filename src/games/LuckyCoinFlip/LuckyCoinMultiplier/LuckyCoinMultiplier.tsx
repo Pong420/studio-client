@@ -3,7 +3,7 @@ import _classes from './LuckyCoinMultiplier.module.scss';
 
 export interface MultiplierProps extends React.ComponentProps<'div'> {
   value: string;
-  variant: 'red' | 'blue' | 'gold' | 'plain';
+  variant: 'red' | 'blue' | 'result' | 'plain';
   blur?: boolean;
   classes?: { symbol?: string; number?: string; blur?: string };
 }
@@ -15,7 +15,7 @@ export function LuckyCoinMultiplier({ value, variant, className = '', classes = 
         ? blur
           ? `text_onscreen_multipliers_blurred/txt_multipliers_blurred_${n}.png`
           : `text_onscreen_multipliers_plain/txt_multipliers_still_${n}.png`
-        : variant === 'gold'
+        : variant === 'result'
         ? `text_coin_winner/txt_winner_coin_${n}.png`
         : `text_coin_${variant}/txt_${variant}_coin_${n}.png`;
     return require(`@/assets/${image}`);

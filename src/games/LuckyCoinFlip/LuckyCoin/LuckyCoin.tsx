@@ -4,14 +4,14 @@ import classes from './LuckyCoin.module.scss';
 
 export interface LuckyCoinProps extends React.ComponentProps<'div'> {
   value: string;
-  variant: 'red' | 'blue' | 'gold';
+  variant: 'red' | 'blue' | 'result';
   glow?: boolean;
 }
 
 export const shadowColor = classes['shadowColor'];
 
 export function LuckyCoin({ value, variant, glow, className = '', ...divProps }: LuckyCoinProps) {
-  const backgroundImage = variant === 'gold' ? 'bg_coin_winner_large' : `bg_coin_${variant}_screen`;
+  const backgroundImage = variant === 'result' ? 'bg_coin_winner_large' : `bg_coin_${variant}_screen`;
 
   return (
     <div {...divProps} className={cx(classes.root, glow && classes.glow, className)}>
