@@ -38,12 +38,6 @@ enum Stage {
   Coins
 }
 
-const stages = Object.values(Stage).filter((s): s is Stage => typeof s === 'number');
-const getNextStage = (stage: Stage) => {
-  const idx = stages.indexOf(stage);
-  return stages[idx === stages.length - 1 ? 0 : idx + 1];
-};
-
 export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
   const [key, setKey] = useState(0);
@@ -55,7 +49,7 @@ export function LuckyCoinFlip() {
       return {
         top: <LuckyCoinRing variant="readytoplay" />,
         bottom: <LuckyCoinMarquee multipliers={multipliers} ref={marquee} />,
-        buttons: [
+        actions: [
           { text: 'Start (Constant Speed)', onClick: () => marquee.current?.enter() },
           { text: 'Loop (Acceleration)', onClick: () => marquee.current?.start() },
           { text: 'Stop (Deceleration)', onClick: () => marquee.current?.stop(0) }
@@ -67,7 +61,7 @@ export function LuckyCoinFlip() {
       return {
         top: <LuckyCoinRing variant="timetoflip" />,
         bottom: <LuckyCoinCountDown key={key} />,
-        buttons: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
+        actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
@@ -75,7 +69,7 @@ export function LuckyCoinFlip() {
       return {
         top: <LuckyCoinRing variant="timetoflip" />,
         bottom: <LuckyCoinFlipResult variant="red" value={'' + (Math.round(Math.random() * 200) + 2)} key={key} />,
-        buttons: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
+        actions: [{ text: 'Replay', onClick: () => setKey(k => k + 1) }]
       };
     }
 
@@ -89,19 +83,21 @@ export function LuckyCoinFlip() {
   };
 
   const props = getProps();
-  const nextStage = getNextStage(stage);
 
   return (
     <Layout
       background
       {...props}
-      buttons={[
-        {
-          text: `Next (${Stage[nextStage]})`,
-          onClick: () => setStage(nextStage)
-        },
-        ...(props.buttons || [])
-      ]}
+      steps={{
+        options: [
+          { label: 'Marquee', value: Stage.Marquee },
+          { label: 'CountDown', value: Stage.CountDown },
+          { label: 'Result', value: Stage.Result },
+          { label: 'Coins', value: Stage.Coins }
+        ],
+        selected: stage,
+        onChange: setStage
+      }}
     />
   );
 }

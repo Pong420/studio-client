@@ -18,7 +18,7 @@ export function BonusPick() {
       background
       top={<BonusRing ref={ringRef} />}
       bottom={<BonusCircle ref={circleRef} />}
-      buttons={[
+      actions={[
         { text: 'Ring Show', onClick: () => ringRef.current?.start(multipliers) },
         { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
         { text: 'Ring Hide', onClick: () => ringRef.current?.end() },

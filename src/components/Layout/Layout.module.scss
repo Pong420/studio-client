@@ -27,6 +27,8 @@ $dimBackground: rgba(0, 0, 0, 0.1);
     align-items: center;
     justify-content: space-between;
 
+    border-bottom: 1px solid #ccc;
+
     .back {
       &:empty {
         width: $back;
@@ -52,7 +54,20 @@ $dimBackground: rgba(0, 0, 0, 0.1);
   }
 }
 
-.buttons {
+.items {
+  + .items {
+    margin-top: 20px;
+  }
+}
+
+.items_title {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 0.5em;
+}
+
+.items_content {
   display: flex;
   flex-direction: column;
   gap: 10px;
