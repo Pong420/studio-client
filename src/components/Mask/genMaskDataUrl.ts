@@ -1,8 +1,6 @@
 import domtoimage from 'dom-to-image';
 
-const canvas = document.createElement('canvas');
-
-export async function genMaskDataUrl(node: HTMLElement) {
+export async function genMaskDataUrl(node: HTMLElement, canvas: HTMLCanvasElement) {
   const scale = 2;
   const width = node.clientWidth * scale;
   const height = node.clientHeight * scale;
@@ -10,8 +8,10 @@ export async function genMaskDataUrl(node: HTMLElement) {
   const style: React.CSSProperties = {
     transform: 'scale(' + scale + ')',
     transformOrigin: 'top left',
-    opacity: 1
+    opacity: '1'
   };
+
+  node.style.opacity = '0';
 
   const dataUrl = await domtoimage.toPng(node, {
     width,

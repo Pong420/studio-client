@@ -17,7 +17,6 @@ $ringWidth: 76px;
   width: 576px;
   height: 768px;
   overflow: hidden;
-  opacity: 0;
 
   &.aligment {
     background-image: url(../../assets/background.png);
@@ -102,8 +101,4 @@ $ringWidth: 76px;
 
   width: 100%;
   height: 100%;
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
