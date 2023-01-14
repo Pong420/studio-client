@@ -28,7 +28,7 @@ export function BonusPick() {
         <BonusRing ref={ringRef} />
       </Layout.Ring>
       <Layout.Circle>
-        <BonusCircle ref={ringRef} />
+        <BonusCircle ref={circleRef} />
       </Layout.Circle>
     </Layout>
   );
