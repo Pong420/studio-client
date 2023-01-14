@@ -19,7 +19,7 @@ export function LuckyCoinFlipResult({
   const scale = useSpringValue(0, { config: config.slow });
 
   useEffect(() => {
-    scale.start(1);
+    scale.start({ from: 0, to: 1 });
   }, [scale]);
 
   return (

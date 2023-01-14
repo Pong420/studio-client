@@ -1,10 +1,10 @@
 import { Ref, forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { animated, to, useSpringValue } from '@react-spring/web';
 import { Logger } from '@/utils/logger';
-import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
-import classes from './LuckyCoinMarquee.module.scss';
 import { Layout } from '@/components/Layout';
+import { LuckyCoinMultiplier } from '../LuckyCoinMultiplier';
 import { LuckyCoinRing } from '../LuckyCoinRing';
+import classes from './LuckyCoinMarquee.module.scss';
 
 export interface LuckyCoinMarqueeProps {
   multipliers: number[];
@@ -28,22 +28,23 @@ function LuckyCoinMarqueeComponent(
   { multipliers: initialMultipliers }: LuckyCoinMarqueeProps,
   ref: Ref<LuckyCoinMarqueeHandler>
 ) {
+  const translate = useSpringValue(0);
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const [blur, setBlur] = useState(false);
   const multipliers = useMemo(
     () => [...initialMultipliers, ...initialMultipliers, ...initialMultipliers],
     [initialMultipliers]
   );
-  const [blur, setBlur] = useState(false);
-  const marqueeRef = useRef<HTMLDivElement>(null);
-
-  const translate = useSpringValue(0);
-  const getTotalWidth = () => marqueeRef.current?.offsetWidth ?? 0;
-  const getVisibleWidth = () => marqueeRef.current?.parentElement?.offsetWidth ?? 0;
+  // const { setSteps } = useLayoutContext();
 
   useEffect(() => {
-    logger.info('initial multipliers', initialMultipliers);
+    logger.log('initial multipliers', initialMultipliers);
   }, [initialMultipliers]);
 
   useImperativeHandle(ref, () => {
+    const getTotalWidth = () => marqueeRef.current?.offsetWidth ?? 0;
+    const getVisibleWidth = () => marqueeRef.current?.parentElement?.offsetWidth ?? 0;
+
     const setup = () => {
       let resolve: any;
 

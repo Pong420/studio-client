@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useLocation, useMatches } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { Outlet, useLocation, useMatches, useOutletContext } from 'react-router-dom';
 import { IRoutes, router } from '@/routes';
 import { StepOption } from '@/hooks/useSteps';
 import { Button } from '@/components/Button';
@@ -10,32 +10,45 @@ import cx from 'classnames';
 export type LayoutAction = React.ComponentProps<'button'> & { text: string };
 
 export interface LayoutProps {
-  children?: React.ReactNode;
-
   /* props for development */
   aligment?: boolean;
   background?: boolean;
-  steps?: StepOption<any>;
-  actions?: LayoutAction[] | { title?: string; options: LayoutAction[] };
 }
 
-export const ExtensionAngle = 75;
+export interface LayoutContext {
+  setActions: (payload?: LayoutAction[] | { title?: string; options: LayoutAction[] }) => void;
+  setSteps: (payload: StepOption<any>) => void;
+}
 
 const control = process.env.REACT_APP_CONTROL === 'true';
 
-export function Layout({ children, background, actions: _actions, steps }: LayoutProps) {
+export const useLayoutContext = () => useOutletContext() as LayoutContext;
+
+export function Layout({ background }: LayoutProps) {
   const location = useLocation();
   const handle = useMatches().slice(-1)[0].handle as IRoutes['children'][number]['handle'];
-  const actions = Array.isArray(_actions) ? { options: _actions } : _actions;
+  const [actions, setActions] = useState<{ title?: string; options: LayoutAction[] }>();
+  const [steps, setSteps] = useState<StepOption<any>>();
+  const context = useMemo(
+    (): LayoutContext => ({
+      setActions: payload => setActions(Array.isArray(payload) ? { options: payload } : payload),
+      setSteps: payload => setSteps(payload)
+    }),
+    []
+  );
 
   useEffect(() => {
     document.title = handle.title;
+    return () => {
+      setSteps(undefined);
+      setActions(undefined);
+    };
   }, [handle]);
 
   return (
     <div className={classes.root}>
       <div className={cx(classes.main, { [classes.background]: background })}>
-        {children}
+        <Outlet context={context} />
         <Mask />
       </div>
 

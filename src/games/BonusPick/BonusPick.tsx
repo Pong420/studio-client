@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Layout } from '@/components/Layout';
+import { useEffect, useRef } from 'react';
+import { Layout, useLayoutContext } from '@/components/Layout';
 import { BonusRing, BonusRingController } from './BonusRing';
 import { BonusCircle, BonusCircleController } from './BonusCircle';
 
@@ -11,25 +11,26 @@ while (multipliers.length < 32) {
 export function BonusPick() {
   const ringRef = useRef<BonusRingController>(null);
   const circleRef = useRef<BonusCircleController>(null);
+  const { setActions } = useLayoutContext();
+
+  useEffect(() => {
+    setActions([
+      { text: 'Ring Show', onClick: () => ringRef.current?.start(multipliers) },
+      { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
+      { text: 'Ring Hide', onClick: () => ringRef.current?.end() },
+      { text: 'Circle Start', onClick: () => circleRef.current?.start(multipliers) },
+      { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() }
+    ]);
+  }, [setActions]);
 
   return (
-    <Layout
-      // aligment
-      background
-      actions={[
-        { text: 'Ring Show', onClick: () => ringRef.current?.start(multipliers) },
-        { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
-        { text: 'Ring Hide', onClick: () => ringRef.current?.end() },
-        { text: 'Circle Start', onClick: () => circleRef.current?.start(multipliers) },
-        { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() }
-      ]}
-    >
+    <>
       <Layout.Ring>
         <BonusRing ref={ringRef} />
       </Layout.Ring>
       <Layout.Circle>
         <BonusCircle ref={circleRef} />
       </Layout.Circle>
-    </Layout>
+    </>
   );
 }

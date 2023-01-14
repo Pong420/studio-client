@@ -1,5 +1,3 @@
-$dimBackground: rgba(0, 0, 0, 0.1);
-
 .root {
   position: absolute;
   width: 100%;
@@ -21,7 +19,7 @@ $dimBackground: rgba(0, 0, 0, 0.1);
   max-height: 768px;
 
   .head {
-    $back: 2em;
+    $iconSize: 2em;
 
     display: flex;
     align-items: center;
@@ -31,20 +29,20 @@ $dimBackground: rgba(0, 0, 0, 0.1);
 
     .back {
       &:empty {
-        width: $back;
-        height: $back;
+        width: $iconSize;
+        height: $iconSize;
       }
 
       svg {
-        width: $back;
-        height: $back;
+        width: $iconSize;
+        height: $iconSize;
         cursor: pointer;
       }
     }
 
     &:after {
       content: '';
-      width: $back;
+      width: $iconSize;
     }
   }
 
@@ -82,7 +80,7 @@ $dimBackground: rgba(0, 0, 0, 0.1);
   @include shadow-border(0, 0, 0px, 1px);
 
   &.background {
-    background-color: #ccc;
+    background-color: #efefef;
   }
 }
 

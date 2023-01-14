@@ -2,6 +2,7 @@ import { RouteObject, createHashRouter } from 'react-router-dom';
 import { Entry } from '@/games/Entry';
 import { BonusPick } from '@/games/BonusPick';
 import { LuckyCoinFlip } from '@/games/LuckyCoinFlip';
+import { Layout } from '@/components/Layout';
 
 export type IRoutes = typeof routes[number];
 
@@ -10,6 +11,7 @@ export type IRoutes = typeof routes[number];
  */
 export const routes = [
   {
+    element: <Layout background />,
     children: [
       {
         path: '/' as const,
