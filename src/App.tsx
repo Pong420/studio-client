@@ -8,13 +8,10 @@ const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 function App() {
   const preload = usePreloadAssets(assetsCtx);
 
-  if (!preload.done) {
-    return null;
-  }
-
   return (
     <DataSocketProvider>
-      <RouterProvider router={router} />
+      {/*  */}
+      {preload.done && <RouterProvider router={router} />}
     </DataSocketProvider>
   );
 }

@@ -7,13 +7,13 @@ import { Mask } from '@/components/Mask';
 import classes from './Layout.module.scss';
 import cx from 'classnames';
 
-export type LayoutAction = React.ComponentProps<'button'> & { text: string };
-
 export interface LayoutProps {
   /* props for development */
   aligment?: boolean;
   background?: boolean;
 }
+
+export type LayoutAction = React.ComponentProps<'button'> & { text: string };
 
 export interface LayoutContext {
   setActions: (payload?: LayoutAction[] | { title?: string; options: LayoutAction[] }) => void;

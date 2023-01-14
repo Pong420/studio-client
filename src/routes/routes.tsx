@@ -1,8 +1,8 @@
 import { RouteObject, createHashRouter } from 'react-router-dom';
-import { Entry } from '@/games/Entry';
-import { BonusPick } from '@/games/BonusPick';
-import { LuckyCoinFlip } from '@/games/LuckyCoinFlip';
 import { Layout } from '@/components/Layout';
+import { BonusPick } from '@/components/BonusPick';
+import { LuckyCoinFlip } from '@/components/LuckyCoinFlip';
+import { Entry } from '@/Entry';
 
 export type IRoutes = typeof routes[number];
 
