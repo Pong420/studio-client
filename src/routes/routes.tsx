@@ -13,17 +13,17 @@ export const routes = [
     children: [
       {
         path: '/' as const,
-        loader: () => ({ title: 'Home' }),
+        handle: { title: 'Home' },
         element: <Entry />
       },
       {
         path: '/bonus-pick' as const,
-        loader: () => ({ title: 'Bonus Pick' }),
+        handle: { title: 'Bonus Pick' },
         element: <BonusPick />
       },
       {
         path: '/lucky-coin-flip/:step?' as const,
-        loader: () => ({ title: 'Luck Coin Flip' }),
+        handle: { title: 'Luck Coin Flip' },
         element: <LuckyCoinFlip />
       }
     ]

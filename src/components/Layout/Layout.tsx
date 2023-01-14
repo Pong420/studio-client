@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useLoaderData, useLocation } from 'react-router-dom';
-import { router } from '@/routes';
+import { useLocation, useMatches } from 'react-router-dom';
+import { IRoutes, router } from '@/routes';
+import { StepOption } from '@/hooks/useSteps';
 import { Button } from '@/components/Button';
 import { Mask } from '@/components/Mask';
 import classes from './Layout.module.scss';
 import cx from 'classnames';
-import { StepOption } from '@/hooks/useSteps';
 
 export type LayoutAction = React.ComponentProps<'button'> & { text: string };
 
@@ -25,12 +25,12 @@ const control = process.env.REACT_APP_CONTROL === 'true';
 
 export function Layout({ children, background, actions: _actions, steps }: LayoutProps) {
   const location = useLocation();
-  const loader = useLoaderData() as { title: string };
+  const handle = useMatches().slice(-1)[0].handle as IRoutes['children'][number]['handle'];
   const actions = Array.isArray(_actions) ? { options: _actions } : _actions;
 
   useEffect(() => {
-    document.title = loader.title;
-  }, [loader]);
+    document.title = handle.title;
+  }, [handle]);
 
   return (
     <div className={classes.root}>
@@ -49,7 +49,7 @@ export function Layout({ children, background, actions: _actions, steps }: Layou
                 </svg>
               )}
             </div>
-            <div className={classes.title}>{loader.title}</div>
+            <div className={classes.title}>{handle.title}</div>
           </div>
 
           {!!steps?.options.length && (

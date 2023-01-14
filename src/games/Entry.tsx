@@ -10,12 +10,12 @@ export function Entry() {
         title: ' ',
         options: data.reduce((actions, r) => {
           const path = r.path;
-          const loader = r.loader as any;
+          const handle = r.handle;
           return path === '/' || !path
             ? actions
             : [
                 ...actions,
-                { text: loader?.()?.title || path, onClick: () => router.navigate(path.replace(/(\/\*|:.*)$/, '')) }
+                { text: handle?.title || path, onClick: () => router.navigate(path.replace(/(\/\*|:.*)$/, '')) }
               ];
         }, [] as LayoutAction[])
       }}
