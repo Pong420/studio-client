@@ -16,7 +16,6 @@
   "dependencies": {
     "@ct/common-component": "^1.1.24",
     "@ct/react-scripts": "^1.1.0",
-    "@ct/socket-emitter": "^1.2.5",
     "@esotericsoftware/spine-canvas": "^4.2.10",
     "@esotericsoftware/spine-core": "^4.2.10",
     "@esotericsoftware/spine-player": "^4.2.10",

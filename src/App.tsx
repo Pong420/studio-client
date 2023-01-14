@@ -1,6 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './routes';
-import { DataSocketProvider } from './hooks/useDataSocket';
 import { usePreloadAssets } from './hooks/usePreloadAssets';
 
 const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
@@ -8,12 +7,7 @@ const assetsCtx = require.context('./assets', true, /(\.png|\.jpg)$/);
 function App() {
   const preload = usePreloadAssets(assetsCtx);
 
-  return (
-    <DataSocketProvider>
-      {/*  */}
-      {preload.done && <RouterProvider router={router} />}
-    </DataSocketProvider>
-  );
+  return preload.done ? <RouterProvider router={router} /> : null;
 }
 
 export default App;
