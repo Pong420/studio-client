@@ -1,3 +1,7 @@
 # https://www.robotstxt.org/robotstxt.html
+# https://developers.google.com/search/docs/crawling-indexing/robots/create-robots-txt#create_rules
 User-agent: *
-Disallow:
+# AdsBot crawlers must be named explicitly
+User-agent: AdsBot-Google
+# Block all crawlers
+Disallow: /
