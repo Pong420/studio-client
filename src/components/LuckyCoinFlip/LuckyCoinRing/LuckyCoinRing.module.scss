@@ -1,9 +1,22 @@
 .root {
   width: auto;
   position: absolute;
-  top: 0.7em;
   left: 0;
   right: 0;
   margin: auto;
-  // height: 6em;
+
+  &:global(.luckycoinflip) {
+    top: 1em;
+    height: 6em;
+  }
+
+  &:global(.timetoflip) {
+    top: 0.5em;
+    height: 5em;
+  }
+
+  &:global(.readytoplay) {
+    top: 0.7em;
+    height: 6em;
+  }
 }

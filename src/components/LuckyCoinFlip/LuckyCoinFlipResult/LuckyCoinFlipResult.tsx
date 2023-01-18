@@ -3,6 +3,7 @@ import { useSpringValue, animated, to, config } from '@react-spring/web';
 import { Layout } from '@/components/Layout';
 import { getRandomInt, randomOption } from '@/utils/random';
 import { LuckyCoin, shadowColor } from '../LuckyCoin/LuckyCoin';
+import { LuckyCoinRing } from '../LuckyCoinRing';
 import classes from './LuckyCoinFlipResult.module.scss';
 
 const variants = ['red', 'blue', 'result'] as const;
@@ -23,15 +24,20 @@ export function LuckyCoinFlipResult({
   }, [scale]);
 
   return (
-    <Layout.Circle>
-      <div className={classes.root}>
-        <animated.div
-          className={classes.coin}
-          style={{ scale, opacity: scale, boxShadow: to(scale, n => `0px 0px ${n * 40}px ${shadowColor}`) }}
-        >
-          <LuckyCoin value={value} variant={variant} />
-        </animated.div>
-      </div>
-    </Layout.Circle>
+    <>
+      <Layout.Ring>
+        <LuckyCoinRing variant="readytoplay" />
+      </Layout.Ring>
+      <Layout.Circle>
+        <div className={classes.root}>
+          <animated.div
+            className={classes.coin}
+            style={{ scale, opacity: scale, boxShadow: to(scale, n => `0px 0px ${n * 40}px ${shadowColor}`) }}
+          >
+            <LuckyCoin value={value} variant={variant} />
+          </animated.div>
+        </div>
+      </Layout.Circle>
+    </>
   );
 }

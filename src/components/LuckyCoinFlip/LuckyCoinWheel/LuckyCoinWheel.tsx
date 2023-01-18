@@ -143,7 +143,7 @@ function LuckyCoinWheelComponent(
   return (
     <>
       <Layout.Ring>
-        <LuckyCoinRing variant="readytoplay" />
+        <LuckyCoinRing variant="luckycoinflip" />
       </Layout.Ring>
       <Layout.Circle>
         <section className={classes.wheel}>

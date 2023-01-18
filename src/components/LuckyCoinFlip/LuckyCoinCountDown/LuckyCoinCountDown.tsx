@@ -33,7 +33,7 @@ export function LuckyCoinCountDown() {
       <Layout.Circle>
         <div className={classes.root} key={count}>
           {count === 0 ? null : (
-            <animated.img style={{ scale }} src={require(`@/assets/txt_countdown_${count}.png`)} alt="" />
+            <animated.img style={{ scale }} src={require(`@/assets/lcf/txt_countdown_${count}.png`)} alt="" />
           )}
         </div>
       </Layout.Circle>

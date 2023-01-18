@@ -1,21 +1,10 @@
+import cx from 'classnames';
 import classes from './LuckyCoinRing.module.scss';
 
 export interface LuckyCoinRingProps {
-  variant: 'timetoflip' | 'readytoplay';
+  variant: 'luckycoinflip' | 'timetoflip' | 'readytoplay';
 }
 
-const heights: Record<LuckyCoinRingProps['variant'], string | number> = {
-  timetoflip: '5em',
-  readytoplay: '6em'
-};
-
 export function LuckyCoinRing({ variant }: LuckyCoinRingProps) {
-  return (
-    <img
-      className={classes.root}
-      src={require(`@/assets/lcf/banner_${variant}.png`)}
-      style={{ height: heights[variant] }}
-      alt=""
-    />
-  );
+  return <img className={cx(classes.root, variant)} src={require(`@/assets/lcf/banner_${variant}.png`)} alt="" />;
 }

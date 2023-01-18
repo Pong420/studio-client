@@ -144,7 +144,7 @@ function LuckyCoinMarqueeComponent(
   return (
     <>
       <Layout.Ring>
-        <LuckyCoinRing variant="readytoplay" />
+        <LuckyCoinRing variant="luckycoinflip" />
       </Layout.Ring>
 
       <Layout.Circle>
