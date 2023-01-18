@@ -53,24 +53,24 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
           <animated.div className={classes.item} style={{ opacity: opacity.to(d => 1 - d), transform }}>
             <img
               className={cx(classes.front, classes.back)}
-              src={require(`@/assets/bp/pc_icon_tile_bg_multiplier.png`)}
+              src={require(`@/assets/bp/icon_tile_bg_multiplier.png`)}
               alt="multiplier"
             />
             <img
               className={cx(classes.front, classes.multiplier)}
-              src={require(`@/assets/bp/payout_multipliers/pc_txt_payout${getPayout(multiplier)}_x${multiplier}.png`)}
+              src={require(`@/assets/bp/payout_multipliers/txt_payout${getPayout(multiplier)}_x${multiplier}.png`)}
               alt="multiplier"
             />
           </animated.div>
           <animated.div className={classes.item} style={{ opacity, transform, rotateY: '180deg' }}>
             <img
               className={cx(classes.flipped, classes.back)}
-              src={require(`@/assets/bp/pc_icon_tile_${back}.png`)}
+              src={require(`@/assets/bp/icon_tile_${back}.png`)}
               alt="suit"
             />
             <img
               className={cx(classes.flipped, classes.suit)}
-              src={require(`@/assets/bp/pc_icon_${suit}_coloured_screen.png`)}
+              src={require(`@/assets/bp/icon_${suit}_coloured_screen.png`)}
               alt="suit"
             />
           </animated.div>
