@@ -19,7 +19,9 @@ export function BonusPick() {
       { text: 'Ring Rotate', onClick: () => ringRef.current?.rotate() },
       { text: 'Ring Hide', onClick: () => ringRef.current?.end() },
       { text: 'Circle Start', onClick: () => circleRef.current?.start(multipliers) },
-      { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() }
+      { text: 'Circle Flip', onClick: () => circleRef.current?.flip() },
+      { text: 'Circle Rotate', onClick: () => circleRef.current?.rotate() },
+      { text: 'Change Suit', onClick: () => circleRef.current?.changeSuit() }
     ]);
   }, [setActions]);
 

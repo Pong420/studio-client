@@ -1,7 +1,8 @@
 import { Ref, forwardRef, useImperativeHandle, useState } from 'react';
 import { animated, useSpringValue, useSprings } from '@react-spring/web';
-import { Circle, CircleItem, CircleProps } from '@/components/Circle';
+import { Circle, CircleItem, CircleProps, suit } from '@/components/Circle';
 import classes from './BonusCircle.module.scss';
+import { getRandomInt } from '@/utils/random';
 
 const ItemSize = 5;
 const circleProps: Pick<CircleProps, 'total' | 'adjustment'>[] = [
@@ -23,16 +24,23 @@ export interface BonusCircleProps {}
 export interface BonusCircleController {
   start: (multipliers: number[]) => Promise<void>;
   rotate: () => Promise<void>;
+  flip: () => Promise<void>;
+  changeSuit: () => Promise<void>;
 }
 
 function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleController>) {
   const [multipliers, setMultipliers] = useState<number[]>([]);
+  const [flipped, setFlipped] = useState(false);
+  const [suitEnum] = useState(['club', 'diamond', 'heart', 'spade'] as suit[]);
+  const getSuit = (len: number) => Array.from(Array(len)).map(_ => suitEnum[getRandomInt(0, suitEnum.length - 1)]);
+  const [suits, setSuits] = useState(() => getSuit(40));
   const [circleSprings, circles] = useSprings(circleProps.length, () => ({ opacity: 0, rotate: 0 }));
   const scale = useSpringValue(1);
 
   useImperativeHandle(ref, () => ({
     start: async multipliers => {
       setMultipliers(multipliers);
+      setSuits(getSuit(multipliers.length));
       await Promise.all(circles.start(i => ({ opacity: i === 0 ? 1 : 0 })));
       await Promise.all(circles.start({ opacity: 1 }));
     },
@@ -52,6 +60,12 @@ function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleCont
       await scale.start(0.5);
       await scale.start(1);
       stop = true;
+    },
+    flip: async () => {
+      setFlipped(d => !d);
+    },
+    changeSuit: async () => {
+      setSuits(getSuit(multipliers.length));
     }
   }));
 
@@ -67,9 +81,14 @@ function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleCont
             opacity={circleSprings[i].opacity}
             rotate={circleSprings[i].rotate}
             renderItem={(idx, style) => (
-              <CircleItem key={idx} style={style}>
-                x{multipliers[idx]}
-              </CircleItem>
+              <CircleItem
+                key={idx}
+                multiplier={multipliers[idx]}
+                flipped={flipped}
+                suit={suits[idx]}
+                back={'bg_multiplier_flipped'}
+                style={style}
+              />
             )}
             {...props}
           />

@@ -5,14 +5,16 @@ import { LuckyCoinMarquee, LuckyCoinMarqueeHandler } from './LuckyCoinMarquee';
 import { LuckyCoinCountDown } from './LuckyCoinCountDown';
 import { LuckyCoinFlipResult } from './LuckyCoinFlipResult';
 import { LuckyCoinDisplay } from './LuckyCoinDisplay';
+import { LuckyCoinWheel, LuckyCoinWheelHandler } from './LuckyCoinWheel';
 
-const useSteps = createUseSteps(['Marquee', 'CountDown', 'Result', 'Coins'], {
+const useSteps = createUseSteps(['Wheel', 'Marquee', 'CountDown', 'Result', 'Coins'], {
   path: '/lucky-coin-flip/:step?',
   defaultValue: 'Marquee'
 });
 
 export function LuckyCoinFlip() {
   const marquee = useRef<LuckyCoinMarqueeHandler>(null);
+  const wheel = useRef<LuckyCoinWheelHandler>(null);
   const [key, setKey] = useState(0);
   const [node, setNode] = useState<React.ReactElement | null>(null);
   const [multipliers] = useState(Array.from({ length: 9 }, () => Math.round(Math.random() * 198) + 2));
@@ -20,6 +22,17 @@ export function LuckyCoinFlip() {
   const { setSteps, setActions } = useLayoutContext();
 
   useEffect(() => {
+    if (step === steps.Wheel) {
+      setNode(
+        <LuckyCoinWheel
+          ref={wheel}
+          childrenWidth={230}
+          multipliers={multipliers}
+          background={<div style={{ background: 'black', width: '100%', height: '100%' }}></div>}
+        />
+      );
+      setActions([{ text: 'Start', onClick: () => wheel.current?.spin(1, 10) }]);
+    }
     if (step === steps.Marquee) {
       setNode(<LuckyCoinMarquee multipliers={multipliers} ref={marquee} />);
       setActions([

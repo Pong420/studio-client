@@ -41,11 +41,7 @@ function BonusRingComponent(_props: BonusRingProps, ref: Ref<BonusRingController
         rotate={rotate}
         itemSize={4.1}
         renderItem={(idx, style) => {
-          return (
-            <CircleItem key={idx} style={style}>
-              <div>x{multipliers[idx]}</div>
-            </CircleItem>
-          );
+          return <CircleItem multiplier={multipliers[idx]} key={idx} style={style} />;
         }}
       />
     </animated.div>

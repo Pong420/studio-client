@@ -1,0 +1,71 @@
+@use '../LuckyCoinMultiplier/LuckyCoinMultiplier.scss' as *;
+
+.root {
+  @include abs-center;
+  left: 100%;
+  display: flex;
+  gap: 3em;
+}
+
+.multiplier {
+  @include scale(5.5em);
+
+  img {
+    height: 100%;
+  }
+}
+
+.wheel {
+  width: 100%;
+  height: 577px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  transform-style: preserve-3d;
+
+  .blur {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .wheel_inner {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    transform-style: preserve-3d;
+    animation-fill-mode: forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .wheel_segment {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      position: absolute;
+      left: 50%;
+    }
+  }
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes blur_filter {
+  0% {
+    filter: blur(0px);
+  }
+
+  50% {
+    filter: blur(1.5px);
+  }
+
+  100% {
+    filter: blur(0px);
+  }
+}
