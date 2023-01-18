@@ -8,6 +8,9 @@ import classes from './Layout.module.scss';
 import cx from 'classnames';
 
 export interface LayoutProps {
+  control?: boolean;
+  variant?: string;
+
   /* props for development */
   aligment?: boolean;
   background?: boolean;
@@ -20,11 +23,14 @@ export interface LayoutContext {
   setSteps: (payload: StepOption<any>) => void;
 }
 
-const control = process.env.REACT_APP_CONTROL === 'true';
-
 export const useLayoutContext = () => useOutletContext() as LayoutContext;
 
-export function Layout({ background }: LayoutProps) {
+export function Layout({
+  background,
+  aligment,
+  control = true,
+  variant = process.env.REACT_APP_LAYOUT || 'single'
+}: LayoutProps) {
   const location = useLocation();
   const handle = useMatches().slice(-1)[0].handle as IRoutes['children'][number]['handle'];
   const [actions, setActions] = useState<{ title?: string; options: LayoutAction[] }>();
@@ -46,14 +52,18 @@ export function Layout({ background }: LayoutProps) {
   }, [handle]);
 
   return (
-    <div className={classes.root}>
-      <div className={cx(classes.main, { [classes.background]: background })}>
-        <Outlet context={context} />
-        <Mask />
+    <div className={cx(classes.root, variant)}>
+      <div className={classes.leftScreen} />
+
+      <div className={classes.rightScreen}>
+        <div className={cx(classes.main, { [classes.background]: background })}>
+          <Outlet context={context} />
+          <Mask aligment={aligment} />
+        </div>
       </div>
 
       {control && (
-        <div className={classes.navbar}>
+        <div className={classes.control}>
           <div className={classes.head}>
             <div className={classes.back}>
               {location.pathname !== '/' && (
@@ -67,8 +77,8 @@ export function Layout({ background }: LayoutProps) {
 
           {!!steps?.options.length && (
             <div className={classes.items}>
-              <div className={classes.items_title}>Steps</div>
-              <div className={classes.items_content}>
+              <div className={classes.itemsTitle}>Steps</div>
+              <div className={classes.itemsContent}>
                 {steps?.options?.map(({ label, value }) => (
                   <Button key={label} disabled={steps.selected === value} onClick={() => steps.onChange?.(value)}>
                     {label}
@@ -80,8 +90,8 @@ export function Layout({ background }: LayoutProps) {
 
           {!!actions?.options?.length && (
             <div className={classes.items}>
-              <div className={classes.items_title}>{actions.title || 'Animations'}</div>
-              <div className={classes.items_content}>
+              <div className={classes.itemsTitle}>{actions.title || 'Animations'}</div>
+              <div className={classes.itemsContent}>
                 {actions.options?.map(({ text, ...props }) => (
                   <Button key={text} {...props}>
                     {text}
@@ -97,9 +107,9 @@ export function Layout({ background }: LayoutProps) {
 }
 
 Layout.Ring = function (props: React.ComponentProps<'div'>) {
-  return <div className={classes.top} {...props} />;
+  return <div className={classes.ring} {...props} />;
 };
 
 Layout.Circle = function (props: React.ComponentProps<'div'>) {
-  return <div className={classes.bottom} {...props} />;
+  return <div className={classes.circle} {...props} />;
 };

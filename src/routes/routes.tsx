@@ -11,7 +11,7 @@ export type IRoutes = typeof routes[number];
  */
 export const routes = [
   {
-    element: <Layout background />,
+    element: <Layout background variant="single" />,
     children: [
       {
         path: '/' as const,

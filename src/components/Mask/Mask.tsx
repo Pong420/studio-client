@@ -20,9 +20,11 @@ const sectorStyles: React.CSSProperties = {
   clipPath: `polygon(${getSectorPoints(ExtensionAngle)})`
 };
 
-const aligment = false;
+export interface MaskProps {
+  aligment?: boolean;
+}
 
-export function Mask() {
+export function Mask({ aligment }: MaskProps) {
   const nodeRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
