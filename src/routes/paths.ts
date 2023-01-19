@@ -18,7 +18,7 @@ export function navigate<AP extends PathPatterns, PS extends Params<AP>>(
 export function navigate<AP extends PathPatterns, PS extends Params<AP>>(
   to: number | TP<AP>,
   ...[params, options]: PS extends never ? [any?, NOpts?] : [PS, NOpts?]
-): void {
+): Promise<void> {
   if (typeof to === 'number') {
     return router.navigate(to);
   }

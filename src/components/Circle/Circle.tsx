@@ -17,7 +17,7 @@ export type suit = 'club' | 'diamond' | 'heart' | 'spade';
 export interface CircleItemProps extends React.ComponentProps<'div'> {
   multiplier?: number;
   flipped?: boolean;
-  suit?: 'club' | 'diamond' | 'heart' | 'spade';
+  suit?: suit;
   back?: 'bg_multiplier' | 'bg_multiplier_flipped' | 'hover' | 'selected' | 'unselected';
 }
 
@@ -46,10 +46,8 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
 
   return (
     <div {...divProps}>
-      {multiplier === undefined || suit === undefined ? (
-        <></>
-      ) : (
-        <>
+      <>
+        {multiplier && (
           <animated.div className={classes.item} style={{ opacity: opacity.to(d => 1 - d), transform }}>
             <img
               className={cx(classes.front, classes.back)}
@@ -62,6 +60,8 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
               alt="multiplier"
             />
           </animated.div>
+        )}
+        {suit && (
           <animated.div className={classes.item} style={{ opacity, transform, rotateY: '180deg' }}>
             <img
               className={cx(classes.flipped, classes.back)}
@@ -74,8 +74,8 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
               alt="suit"
             />
           </animated.div>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 }
