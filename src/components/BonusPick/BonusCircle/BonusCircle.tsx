@@ -86,7 +86,8 @@ function BonusCircleComponent(_props: BonusCircleProps, ref: Ref<BonusCircleCont
                 multiplier={multipliers[idx]}
                 flipped={flipped}
                 suit={suits[idx]}
-                back={'bg_multiplier_flipped'}
+                multiplierBack="bg_multiplier"
+                flippedBack="bg_multiplier_flipped"
                 style={style}
               />
             )}
