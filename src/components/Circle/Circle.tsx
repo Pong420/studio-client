@@ -14,14 +14,16 @@ export interface CircleProps extends GetCyclesStylesOption, React.ComponentProps
 }
 
 export type suit = 'club' | 'diamond' | 'heart' | 'spade';
+export type circleBg = 'bg_multiplier' | 'bg_multiplier_flipped' | 'hover' | 'selected' | 'unselected';
 export interface CircleItemProps extends React.ComponentProps<'div'> {
   multiplier?: number;
   flipped?: boolean;
-  suit?: 'club' | 'diamond' | 'heart' | 'spade';
-  back?: 'bg_multiplier' | 'bg_multiplier_flipped' | 'hover' | 'selected' | 'unselected';
+  suit?: suit;
+  multiplierBack?: circleBg;
+  flippedBack?: circleBg;
 }
 
-export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: CircleItemProps) {
+export function CircleItem({ multiplier, flipped, suit, multiplierBack, flippedBack, ...divProps }: CircleItemProps) {
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
@@ -46,26 +48,28 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
 
   return (
     <div {...divProps}>
-      {multiplier === undefined || suit === undefined ? (
-        <></>
-      ) : (
-        <>
+      <>
+        {multiplier && (
           <animated.div className={classes.item} style={{ opacity: opacity.to(d => 1 - d), transform }}>
-            <img
-              className={cx(classes.front, classes.back)}
-              src={require(`@/assets/bp/icon_tile_bg_multiplier.png`)}
-              alt="multiplier"
-            />
+            {multiplierBack && (
+              <img
+                className={cx(classes.front, classes.back)}
+                src={require(`@/assets/bp/icon_tile_${multiplierBack}.png`)}
+                alt="multiplier"
+              />
+            )}
             <img
               className={cx(classes.front, classes.multiplier)}
               src={require(`@/assets/bp/payout_multipliers/txt_payout${getPayout(multiplier)}_x${multiplier}.png`)}
               alt="multiplier"
             />
           </animated.div>
+        )}
+        {suit && (
           <animated.div className={classes.item} style={{ opacity, transform, rotateY: '180deg' }}>
             <img
               className={cx(classes.flipped, classes.back)}
-              src={require(`@/assets/bp/icon_tile_${back}.png`)}
+              src={require(`@/assets/bp/icon_tile_${flippedBack}.png`)}
               alt="suit"
             />
             <img
@@ -74,8 +78,8 @@ export function CircleItem({ multiplier, flipped, suit, back, ...divProps }: Cir
               alt="suit"
             />
           </animated.div>
-        </>
-      )}
+        )}
+      </>
     </div>
   );
 }
